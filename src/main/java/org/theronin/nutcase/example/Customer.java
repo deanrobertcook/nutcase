@@ -1,4 +1,4 @@
-package org.theronin.testcase.example;
+package org.theronin.nutcase.example;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

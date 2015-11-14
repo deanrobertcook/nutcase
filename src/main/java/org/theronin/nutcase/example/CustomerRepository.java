@@ -1,4 +1,4 @@
-package org.theronin.testcase.example;
+package org.theronin.nutcase.example;
 
 import org.springframework.data.repository.CrudRepository;
 
