@@ -30,7 +30,7 @@ public class Application {
 
             log.info("Customers found with findAll()");
             log.info("------------------------------");
-            for (Customer customer: repository.findAll()) {
+            for (Customer customer : repository.findAll()) {
                 log.info(customer.toString());
             }
 
@@ -45,7 +45,7 @@ public class Application {
 
             log.info("Customers found with findByLastName('Bauer')");
             log.info("------------------------------");
-            for (Customer bauer: repository.findByLastName("Bauer")) {
+            for (Customer bauer : repository.findByLastName("Bauer")) {
                 log.info(bauer.toString());
             }
             log.info("");
