@@ -1,6 +1,6 @@
 #Copy this file to application.properties and fill out the necessary data
 #DO NOT PUT SENSITIVE INFORMATION HERE - it will be committed to git
-spring.datasource.url=MYSQL_DATABASE_URL
+spring.datasource.url=jdbc:MYSQL_SERVER_URL/nutcase
 spring.datasource.username=MYSQL_USERNAME
 spring.datasource.password=MYSQL_PASSWORD
 spring.datasource.driverClassName=com.mysql.jdbc.Driver
