@@ -1,12 +1,14 @@
-package org.theronin.testcase;
+package org.theronin.testcase.example;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ *
+ */
 @SpringBootApplication
-public class TestcaseApplication {
-
+public class Application {
     public static void main(String[] args) {
-        SpringApplication.run(TestcaseApplication.class, args);
+        SpringApplication.run(Application.class, args);
     }
 }
