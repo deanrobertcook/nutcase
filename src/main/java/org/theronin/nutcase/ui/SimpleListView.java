@@ -4,39 +4,32 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.theronin.nutcase.domain.TestCase;
-import org.theronin.nutcase.repository.TestCaseRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
  */
-public class TestCaseView extends VerticalLayout implements View {
-
-    TestCaseRepository testCaseRepository;
+public class SimpleListView extends VerticalLayout implements View {
+    JpaRepository repository;
     Grid grid;
+    Class type;
 
     Navigator navigator;
 
     @Autowired
-    public TestCaseView(TestCaseRepository testCaseRepository) {
-        this.testCaseRepository = testCaseRepository;
+    public SimpleListView(JpaRepository repository, Class type, String title) {
+        this.repository = repository;
         grid = new Grid();
-
-        Button button = new Button("Users", event -> {
-            navigator.navigateTo(NavigatorUI.USERS_LIST_VIEW);
-        });
-
-        addComponent(button);
+        this.type = type;
 
         setSizeFull();
         setMargin(true);
 
-        Label label = new Label("Test Cases");
+        Label label = new Label(title);
         addComponent(label);
 
         addComponent(grid);
@@ -47,7 +40,7 @@ public class TestCaseView extends VerticalLayout implements View {
     }
 
     private void listTestCases() {
-        grid.setContainerDataSource(new BeanItemContainer(TestCase.class, testCaseRepository.findAll()));
+        grid.setContainerDataSource(new BeanItemContainer(type, repository.findAll()));
     }
 
     @Override

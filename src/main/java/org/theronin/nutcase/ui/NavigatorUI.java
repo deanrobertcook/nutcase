@@ -6,6 +6,8 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.UI;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.theronin.nutcase.domain.NutcaseUser;
+import org.theronin.nutcase.domain.TestCase;
 import org.theronin.nutcase.repository.NutcaseUserRepository;
 import org.theronin.nutcase.repository.TestCaseRepository;
 
@@ -15,7 +17,9 @@ import org.theronin.nutcase.repository.TestCaseRepository;
 @SpringUI
 @Theme("valo")
 public class NavigatorUI extends UI {
-    protected static final String USERS_LIST_VIEW = "";
+
+    protected static final String HOME_VIEW = "";
+    protected static final String USERS_LIST_VIEW = "users";
     protected static final String TEST_CASE_LIST_VIEW = "test_cases";
 
     Navigator navigator;
@@ -36,7 +40,8 @@ public class NavigatorUI extends UI {
 
         navigator = new Navigator(this, this);
 
-        navigator.addView(USERS_LIST_VIEW, new UserListView(nutcaseUserRepository));
-        navigator.addView(TEST_CASE_LIST_VIEW, new TestCaseView(testCaseRepository));
+        navigator.addView(HOME_VIEW, new HomeView());
+        navigator.addView(USERS_LIST_VIEW, new SimpleListView(nutcaseUserRepository, NutcaseUser.class, "Users"));
+        navigator.addView(TEST_CASE_LIST_VIEW, new SimpleListView(testCaseRepository, TestCase.class, "Test Cases"));
     }
 }
