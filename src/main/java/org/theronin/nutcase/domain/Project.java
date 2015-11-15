@@ -34,6 +34,11 @@ public class Project {
         this.description = description;
     }
 
+    @Override
+    public String toString() {
+        return name;
+    }
+
     public Long getId() {
         return id;
     }

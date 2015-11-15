@@ -32,6 +32,15 @@ public class NutcaseUser {
         this.privilege = privilege;
     }
 
+    @Override
+    public String toString() {
+        if (name != null) {
+            return name;
+        } else {
+            return email;
+        }
+    }
+
     public Long getId() {
         return id;
     }
