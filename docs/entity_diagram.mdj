@@ -4066,6 +4066,53 @@
 							},
 							"lineStyle": 1,
 							"points": "1456:1138;1524:1126"
+						},
+						{
+							"_type": "UMLNoteView",
+							"_id": "AAAAAAFRH3P6odgPpx4=",
+							"_parent": {
+								"$ref": "AAAAAAFRCpi2RxL0/Rw="
+							},
+							"visible": true,
+							"enabled": true,
+							"lineColor": "#000000",
+							"fillColor": "#ffffff",
+							"fontColor": "#000000",
+							"font": "Arial;13;0",
+							"showShadow": true,
+							"containerChangeable": false,
+							"containerExtending": false,
+							"left": 1325,
+							"top": 80,
+							"width": 300,
+							"height": 81,
+							"autoResize": false,
+							"text": "Release date should be the expected release date. This can be compared with the date of the last test_run to get a measure of how late the release is, if needed.",
+							"wordWrap": true
+						},
+						{
+							"_type": "UMLNoteLinkView",
+							"_id": "AAAAAAFRH3P6otgSdm4=",
+							"_parent": {
+								"$ref": "AAAAAAFRCpi2RxL0/Rw="
+							},
+							"visible": true,
+							"enabled": true,
+							"lineColor": "#000000",
+							"fillColor": "#ffffff",
+							"fontColor": "#000000",
+							"font": "Arial;13;0",
+							"showShadow": true,
+							"containerChangeable": false,
+							"containerExtending": false,
+							"head": {
+								"$ref": "AAAAAAFRH3P6odgPpx4="
+							},
+							"tail": {
+								"$ref": "AAAAAAFRCqB3+RVQVEY="
+							},
+							"lineStyle": 1,
+							"points": "1256:156;1324:145"
 						}
 					]
 				},
