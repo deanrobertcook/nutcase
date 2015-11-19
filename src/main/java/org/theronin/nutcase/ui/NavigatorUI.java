@@ -6,10 +6,10 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.UI;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.theronin.nutcase.domain.NutcaseUser;
-import org.theronin.nutcase.domain.TestCase;
-import org.theronin.nutcase.repository.NutcaseUserRepository;
-import org.theronin.nutcase.repository.TestCaseRepository;
+import org.theronin.nutcase.domain.user.NutcaseUser;
+import org.theronin.nutcase.domain.testcase.TestCase;
+import org.theronin.nutcase.domain.user.NutcaseUserRepository;
+import org.theronin.nutcase.domain.testcase.TestCaseRepository;
 
 /**
  *
