@@ -1377,30 +1377,6 @@
 										},
 										{
 											"_type": "ERDColumnView",
-											"_id": "AAAAAAFRCsvitBcGeuw=",
-											"_parent": {
-												"$ref": "AAAAAAFRCpsVkhPhuI0="
-											},
-											"model": {
-												"$ref": "AAAAAAFRCsvipBcDBX4="
-											},
-											"visible": true,
-											"enabled": true,
-											"lineColor": "#000000",
-											"fillColor": "#ffffff",
-											"fontColor": "#000000",
-											"font": "Arial;13;0",
-											"showShadow": true,
-											"containerChangeable": false,
-											"containerExtending": false,
-											"left": 1269,
-											"top": 855,
-											"width": 222,
-											"height": 13,
-											"autoResize": false
-										},
-										{
-											"_type": "ERDColumnView",
 											"_id": "AAAAAAFRCswBexcND+U=",
 											"_parent": {
 												"$ref": "AAAAAAFRCpsVkhPhuI0="
@@ -1418,7 +1394,7 @@
 											"containerChangeable": false,
 											"containerExtending": false,
 											"left": 1269,
-											"top": 870,
+											"top": 855,
 											"width": 222,
 											"height": 13,
 											"autoResize": false
@@ -1436,7 +1412,7 @@
 									"left": 1264,
 									"top": 775,
 									"width": 232,
-									"height": 113,
+									"height": 98,
 									"autoResize": false
 								}
 							],
@@ -3157,7 +3133,7 @@
 							"width": 320,
 							"height": 336,
 							"autoResize": false,
-							"text": "Other Ideas:\n - Import and export functions (from excel, etc.)\n - Groups of users\n - Search functionality\n - health (of a test)\n - automatic creation/updating of test cases, features, etc. when updating feature files when pushed to master (when Jenkins finds it - needs more API privileges)\n- have \"execution_steps\" that trace the progress of test_steps in an execution\n- backup/undo operations\n- user-draft area for potentially new test cases\n- potentially re-usable test_steps (with a counting mechanism to help identify potential duplicates)",
+							"text": "Other Ideas:\n - Import and export functions (from excel, etc.)\n - Groups of users\n - Search functionality\n - health (of a test)\n - automatic creation/updating of test cases, features, etc. when updating feature files when pushed to master (when Jenkins finds it - needs more API privileges)\n- have \"execution_steps\" that trace the progress of test_steps in an execution\n- backup/undo operations\n- user-draft area for potentially new test cases\n- potentially re-usable test_steps (with a counting mechanism to help identify potential duplicates)\n- clone functionalty",
 							"wordWrap": true
 						},
 						{
@@ -3303,30 +3279,6 @@
 										},
 										{
 											"_type": "ERDColumnView",
-											"_id": "AAAAAAFRG/3Mg9cNmbY=",
-											"_parent": {
-												"$ref": "AAAAAAFRG/04JdbL9mI="
-											},
-											"model": {
-												"$ref": "AAAAAAFRG/3McdcKTuM="
-											},
-											"visible": true,
-											"enabled": true,
-											"lineColor": "#000000",
-											"fillColor": "#ffffff",
-											"fontColor": "#000000",
-											"font": "Arial;13;0",
-											"showShadow": true,
-											"containerChangeable": false,
-											"containerExtending": false,
-											"left": 1517,
-											"top": 432,
-											"width": 231,
-											"height": 13,
-											"autoResize": false
-										},
-										{
-											"_type": "ERDColumnView",
 											"_id": "AAAAAAFRG/4qydchq0E=",
 											"_parent": {
 												"$ref": "AAAAAAFRG/04JdbL9mI="
@@ -3344,7 +3296,7 @@
 											"containerChangeable": false,
 											"containerExtending": false,
 											"left": 1517,
-											"top": 447,
+											"top": 432,
 											"width": 231,
 											"height": 13,
 											"autoResize": false
@@ -3362,7 +3314,7 @@
 									"left": 1512,
 									"top": 367,
 									"width": 241,
-									"height": 98,
+									"height": 83,
 									"autoResize": false
 								}
 							],
@@ -3728,6 +3680,30 @@
 										},
 										{
 											"_type": "ERDColumnView",
+											"_id": "AAAAAAFRH3ILZdgKQaY=",
+											"_parent": {
+												"$ref": "AAAAAAFRHAW7Y9d/VfM="
+											},
+											"model": {
+												"$ref": "AAAAAAFRH3ILUdgH7GU="
+											},
+											"visible": true,
+											"enabled": true,
+											"lineColor": "#000000",
+											"fillColor": "#ffffff",
+											"fontColor": "#000000",
+											"font": "Arial;13;0",
+											"showShadow": true,
+											"containerChangeable": false,
+											"containerExtending": false,
+											"left": 1269,
+											"top": 1129,
+											"width": 182,
+											"height": 13,
+											"autoResize": false
+										},
+										{
+											"_type": "ERDColumnView",
 											"_id": "AAAAAAFRHAkR8NfuP5k=",
 											"_parent": {
 												"$ref": "AAAAAAFRHAW7Y9d/VfM="
@@ -3745,7 +3721,7 @@
 											"containerChangeable": false,
 											"containerExtending": false,
 											"left": 1269,
-											"top": 1129,
+											"top": 1144,
 											"width": 182,
 											"height": 13,
 											"autoResize": false
@@ -3763,7 +3739,7 @@
 									"left": 1264,
 									"top": 1079,
 									"width": 192,
-									"height": 68,
+									"height": 83,
 									"autoResize": false
 								}
 							],
@@ -4943,20 +4919,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFRCpsVkhPdLJ8="
 							},
-							"name": "execution_date",
-							"length": 0,
-							"primaryKey": false,
-							"foreignKey": false,
-							"nullable": false,
-							"unique": false
-						},
-						{
-							"_type": "ERDColumn",
-							"_id": "AAAAAAFRCsvipBcDBX4=",
-							"_parent": {
-								"$ref": "AAAAAAFRCpsVkhPdLJ8="
-							},
-							"name": "execution_time",
+							"name": "execution_datetime",
 							"length": 0,
 							"primaryKey": false,
 							"foreignKey": false,
@@ -5292,20 +5255,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFRG/04I9bH/8U="
 							},
-							"name": "execution_date",
-							"length": 0,
-							"primaryKey": false,
-							"foreignKey": false,
-							"nullable": false,
-							"unique": false
-						},
-						{
-							"_type": "ERDColumn",
-							"_id": "AAAAAAFRG/3McdcKTuM=",
-							"_parent": {
-								"$ref": "AAAAAAFRG/04I9bH/8U="
-							},
-							"name": "execution_time",
+							"name": "execution_datetime",
 							"length": 0,
 							"primaryKey": false,
 							"foreignKey": false,
@@ -5408,6 +5358,19 @@
 								"$ref": "AAAAAAFRHAW7Ytd7gcc="
 							},
 							"name": "test_step_id",
+							"length": 0,
+							"primaryKey": false,
+							"foreignKey": false,
+							"nullable": false,
+							"unique": false
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAFRH3ILUdgH7GU=",
+							"_parent": {
+								"$ref": "AAAAAAFRHAW7Ytd7gcc="
+							},
+							"name": "execution_datetime",
 							"length": 0,
 							"primaryKey": false,
 							"foreignKey": false,
