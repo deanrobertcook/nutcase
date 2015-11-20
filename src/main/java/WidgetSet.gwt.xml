@@ -1,0 +1,5 @@
+<module>
+    <inherits name="org.dussan.vaadin.dcharts.DchartsWidgetset" />
+
+    <inherits name="com.vaadin.DefaultWidgetSet" />
+</module>

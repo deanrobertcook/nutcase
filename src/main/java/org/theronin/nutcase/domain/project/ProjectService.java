@@ -1,9 +1,12 @@
 package org.theronin.nutcase.domain.project;
 
-import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.theronin.nutcase.config.logging.Logged;
+
+import javax.inject.Inject;
+import java.util.List;
+
 import static org.theronin.nutcase.domain.base.EntityValidator.validateEntity;
 import static org.theronin.nutcase.domain.base.ParameterValidator.isNull;
 import static org.theronin.nutcase.domain.base.ParameterValidator.notNull;
@@ -49,5 +52,10 @@ public class ProjectService {
     @Logged
     public Project read(Long id) {
         return getDefaultRepo().findOne(id);
+    }
+
+    @Logged
+    public List<Project> readAll() {
+        return getDefaultRepo().findAll();
     }
 }

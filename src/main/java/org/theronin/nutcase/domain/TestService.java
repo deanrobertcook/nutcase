@@ -1,17 +1,18 @@
 package org.theronin.nutcase.domain;
 
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import org.theronin.nutcase.config.logging.Logged;
-import org.theronin.nutcase.domain.run.Run;
-import org.theronin.nutcase.domain.run.RunRepository;
+import org.theronin.nutcase.domain.project.Project;
+import org.theronin.nutcase.domain.project.ProjectRepository;
 import org.theronin.nutcase.domain.testcase.TestCase;
 import org.theronin.nutcase.domain.testcase.TestCaseRepository;
 import org.theronin.nutcase.domain.teststep.TestStep;
 import org.theronin.nutcase.domain.teststep.TestStepRepository;
 import org.theronin.nutcase.domain.user.NutcaseUser;
 import org.theronin.nutcase.domain.user.NutcaseUserRepository;
+
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
 @Service
 public class TestService {
@@ -23,7 +24,7 @@ public class TestService {
     TestCaseRepository testCaseRepository;
 
     @Inject
-    RunRepository projectRepository;
+    ProjectRepository projectRepository;
 
     @Inject
     NutcaseUserRepository userRepository;
@@ -42,24 +43,24 @@ public class TestService {
         userRepository.save(user1);
         userRepository.save(user2);
 
-        Run someProject = new Run("Android", "The Android project.");
+        Project someProject = new Project("Android", "The Android project.");
 
         projectRepository.save(someProject);
-        projectRepository.save(new Run("iOS", "The iOS project."));
-        projectRepository.save(new Run("WebApp", "The WebApp project."));
+        projectRepository.save(new Project("iOS", "The iOS project."));
+        projectRepository.save(new Project("WebApp", "The WebApp project."));
 
-        TestCase testCase1 = new TestCase(someProject, "Test that the cursor works");
-        TestCase testCase2 = new TestCase(someProject, "Test that scrolling works");
-        testCaseRepository.save(testCase1);
-        testCaseRepository.save(testCase2);
-
-        addSomeTestSteps(testCase1, testStepRepository, user1);
-        addSomeTestSteps(testCase2, testStepRepository, user1);
-
-        System.out.println("All Test cases for project Android:");
-        for (TestCase testCase : testCaseRepository.findByRunName("Android")) {
-            System.out.println(testCase.toString());
-        }
+//        TestCase testCase1 = new TestCase(someProject, "Test that the cursor works");
+//        TestCase testCase2 = new TestCase(someProject, "Test that scrolling works");
+//        testCaseRepository.save(testCase1);
+//        testCaseRepository.save(testCase2);
+//
+//        addSomeTestSteps(testCase1, testStepRepository, user1);
+//        addSomeTestSteps(testCase2, testStepRepository, user1);
+//
+//        System.out.println("All Test cases for project Android:");
+//        for (TestCase testCase : testCaseRepository.findByRunName("Android")) {
+//            System.out.println(testCase.toString());
+//        }
     }
 
     @Logged

@@ -6,6 +6,7 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.*;
 import org.theronin.nutcase.ui.components.SignInForm;
+import org.theronin.nutcase.ui.pages.DashboardPage;
 
 import java.io.File;
 
@@ -22,7 +23,7 @@ public class SplashUI extends UI {
     public static final String IMAGES_ROOT = "src/main/resources/images/";
 
     private Image welcomeLogo = new Image(null, new FileResource(new File(IMAGES_ROOT + "logo-large.png")));
-    private SignInForm signInLayout = new SignInForm();
+    private SignInForm signInLayout = new SignInForm(DashboardPage.PATH);
 
     @Override
     protected void init(VaadinRequest request) {
@@ -31,32 +32,33 @@ public class SplashUI extends UI {
     }
 
     private void buildLayout() {
-        VerticalLayout content = new VerticalLayout();
-        setContent(content);
-        content.setSizeFull();
-        content.setMargin(true);
+        setContent(new VerticalLayout() {{
+            setSizeFull();
+            setMargin(true);
 
-        Panel centerPanel = new Panel();
-        content.addComponent(centerPanel);
-        content.setComponentAlignment(centerPanel, Alignment.MIDDLE_CENTER);
-        centerPanel.setWidth(75f, Unit.PERCENTAGE);
-        centerPanel.setHeight(70f, Unit.PERCENTAGE);
+            Panel centerPanel = new Panel() {{
+                setWidth(75f, Unit.PERCENTAGE);
+                setHeight(70f, Unit.PERCENTAGE);
 
-        VerticalLayout panelContent = new VerticalLayout();
-        centerPanel.setContent(panelContent);
-        panelContent.setSizeFull();
-        panelContent.setMargin(true);
+                setContent(new VerticalLayout() {{
+                    setSizeFull();
+                    setMargin(true);
 
-        panelContent.addComponent(welcomeLogo);
-        welcomeLogo.setSizeUndefined();
-        panelContent.setComponentAlignment(welcomeLogo, Alignment.MIDDLE_CENTER);
-        panelContent.setExpandRatio(welcomeLogo, 1f);
+                    addComponent(welcomeLogo);
+                    welcomeLogo.setSizeUndefined();
+                    setComponentAlignment(welcomeLogo, Alignment.MIDDLE_CENTER);
+                    setExpandRatio(welcomeLogo, 1f);
 
+                    addComponent(signInLayout);
+                    signInLayout.setWidthUndefined();
+                    signInLayout.setHeight(40f, Unit.PERCENTAGE);
+                    setComponentAlignment(signInLayout, Alignment.MIDDLE_CENTER);
+                    setExpandRatio(signInLayout, 8f);
+                }});
+            }};
 
-        panelContent.addComponent(signInLayout);
-        signInLayout.setWidthUndefined();
-        signInLayout.setHeight(40f, Unit.PERCENTAGE);
-        panelContent.setComponentAlignment(signInLayout, Alignment.MIDDLE_CENTER);
-        panelContent.setExpandRatio(signInLayout, 8f);
+            addComponent(centerPanel);
+            setComponentAlignment(centerPanel, Alignment.MIDDLE_CENTER);
+        }});
     }
 }

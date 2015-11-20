@@ -15,27 +15,27 @@ public class SignInForm extends VerticalLayout {
     private PasswordField passwordField = new PasswordField("Password");
     private Button submitButton = new Button("Sign in", this::signIn);
 
-    private Panel panel = new Panel("Sign in");
+    private String redirectPath;
 
-    public SignInForm() {
+    public SignInForm(String redirectPath) {
+        this.redirectPath = redirectPath;
         buildLayout();
     }
 
     private void buildLayout() {
-        FormLayout formLayout = new FormLayout();
-        formLayout.setMargin(true);
+        addComponent(new Panel("Sign in") {{
+            setContent(new FormLayout() {{
+                setMargin(true);
 
-        formLayout.addComponent(emailField);
-        emailField.addValidator(new EmailValidator("Please enter a valid E-mail address"));
+                addComponent(emailField);
+                emailField.addValidator(new EmailValidator("Please enter a valid E-mail address"));
 
-        formLayout.addComponent(passwordField);
-        passwordField.addValidator(new StringLengthValidator("Please enter a password", 0, null, false));
+                addComponent(passwordField);
+                passwordField.addValidator(new StringLengthValidator("Please enter a password", 0, null, false));
 
-        formLayout.addComponent(submitButton);
-
-        panel.setContent(formLayout);
-
-        addComponent(panel);
+                addComponent(submitButton);
+            }});
+        }});
     }
 
     private void signIn(Button.ClickEvent event) {
@@ -44,6 +44,7 @@ public class SignInForm extends VerticalLayout {
             Notification.show("Trying really hard to sign in user "
                             + emailField.getValue() + " with password: " + passwordField.getValue(),
                     Notification.Type.TRAY_NOTIFICATION);
+            getUI().getPage().setLocation(redirectPath);
         }
 
     }
