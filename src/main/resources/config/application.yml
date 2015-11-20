@@ -1,0 +1,63 @@
+server:
+    port: 8080
+logging:
+    file: nutcase.log
+security:
+    basic.enabled: false
+spring:
+    application.name: nutcase
+    profiles:
+        active: dev
+    devtools:
+        restart:
+            enabled: true
+        livereload:
+            enabled: true
+    datasource:
+        driver-class-name: org.h2.jdbcx.JdbcDataSource
+        url: jdbc:h2:mem:nutcase;DB_CLOSE_DELAY=-1
+        name:
+        username: sa
+        password:
+    jpa:
+        open-in-view: false
+        database: H2
+        database-platform: org.theronin.nutcase.config.persistence.FixedH2Dialect
+        show_sql: true
+        properties:
+            hibernate.cache.use_second_level_cache: false
+            hibernate.cache.use_query_cache: false
+            hibernate.generate_statistics: true
+            hibernate.globally_quoted_identifiers: true
+        hibernate:
+            ddl-auto: update
+            naming-strategy: org.springframework.boot.orm.jpa.hibernate.SpringNamingStrategy
+            
+        
+    messages:
+        basename: classpath:/i18n/messages
+        cache-seconds: 1
+    mvc:
+        favicon:
+            enabled: false
+    thymeleaf:
+        mode: XHTML
+        cache: false
+        
+# Spring boot admin does not work with spring boot 1.3 if logfile endpoint is enabled
+# https://github.com/codecentric/spring-boot-admin/issues/117
+endpoints:
+    logfile:
+        enabled: false
+        
+# ===================================================================
+# Nutcase specific properties
+# ===================================================================
+
+nc:
+    mail:
+        from: noreply@nutcase.com
+    security:
+        rememberme:
+            # security key (this key should be unique for your application, and kept secret)
+            key: mySecretRememberMe
