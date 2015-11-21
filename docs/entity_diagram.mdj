@@ -3157,7 +3157,7 @@
 							"width": 320,
 							"height": 336,
 							"autoResize": false,
-							"text": "Other Ideas:\n - Import and export functions (from excel, etc.)\n - Groups of users\n - Search functionality\n - health (of a test)\n - automatic creation/updating of test cases, features, etc. when updating feature files when pushed to master (when Jenkins finds it - needs more API privileges)\n- have \"execution_steps\" that trace the progress of test_steps in an execution\n- backup/undo operations\n- user-draft area for potentially new test cases\n- potentially re-usable test_steps (with a counting mechanism to help identify potential duplicates)\n- clone functionalty",
+							"text": "Other Ideas:\n - Import and export functions (from excel, etc.)\n - Groups of users\n - Search functionality\n - health (of a test)\n - automatic creation/updating of test cases, features, etc. when updating feature files when pushed to master (when Jenkins finds it - needs more API privileges)\n- have \"execution_steps\" that trace the progress of test_steps in an execution\n- backup/undo operations\n- user-draft area for potentially new test cases\n- potentially re-usable test_steps (with a counting mechanism to help identify potential duplicates)\n- clone functionalty\n- Trigger tests from the system???",
 							"wordWrap": true
 						},
 						{
