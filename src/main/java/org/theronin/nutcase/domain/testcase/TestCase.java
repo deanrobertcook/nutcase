@@ -1,6 +1,5 @@
 package org.theronin.nutcase.domain.testcase;
 
-import org.theronin.nutcase.domain.run.Run;
 import javax.persistence.*;
 import java.util.List;
 import org.theronin.nutcase.domain.base.BaseEntity;
@@ -12,11 +11,8 @@ import org.theronin.nutcase.domain.teststep.TestStep;
 })
 public class TestCase extends BaseEntity {
 
-    @ManyToOne
-    private Run run;
-
     @Column(unique = true)
-    private String testId;
+	private Long testId;
 
     @OneToMany
     private List<TestStep> teststeps;
@@ -30,17 +26,8 @@ public class TestCase extends BaseEntity {
     protected TestCase() {
     }
 
-    public TestCase(Run run, String description) {
-        this.run = run;
+    public TestCase(String description) {
         this.description = description;
-    }
-
-    public Run getRun() {
-        return run;
-    }
-
-    public void setRun(Run run) {
-        this.run = run;
     }
 
     public List<TestStep> getTeststeps() {
@@ -75,12 +62,12 @@ public class TestCase extends BaseEntity {
         this.automated = automated;
     }
 
-    public String getTestId() {
-        return testId;
-    }
+	public Long getTestId() {
+		return testId;
+	}
 
-    public void setTestId(String testId) {
-        this.testId = testId;
-    }
+	public void setTestId(Long testId) {
+		this.testId = testId;
+	}
 
 }

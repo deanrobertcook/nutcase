@@ -48,8 +48,8 @@ public class TestService {
         projectRepository.save(new Run("iOS", "The iOS project."));
         projectRepository.save(new Run("WebApp", "The WebApp project."));
 
-        TestCase testCase1 = new TestCase(someProject, "Test that the cursor works");
-        TestCase testCase2 = new TestCase(someProject, "Test that scrolling works");
+        TestCase testCase1 = new TestCase("Test that the cursor works");
+        TestCase testCase2 = new TestCase("Test that scrolling works");
         testCaseRepository.save(testCase1);
         testCaseRepository.save(testCase2);
 
