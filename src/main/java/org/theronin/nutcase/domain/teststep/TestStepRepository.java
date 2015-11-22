@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TestStepRepository extends JpaRepository<TestStep, Long> {
 
-		Collection<TestStep> findByTestCase(TestCase testCase);
+    Collection<TestStep> findByTestCase(TestCase testCase);
 }

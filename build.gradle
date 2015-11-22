@@ -27,6 +27,7 @@ targetCompatibility = 1.8
 repositories {
     jcenter()
     mavenCentral()
+    maven { url 'http://maven.vaadin.com/vaadin-addons' }
 }
 
 bootRun {
@@ -40,12 +41,14 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     compile("org.springframework.boot:spring-boot-starter-security")
-    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    compile("org.springframework.boot:spring-boot-starter-data-jpa") {
+        exclude module: 'org.hibernate:hibernate-entitymanager'
+    }
+    compile("org.eclipse.persistence:eclipselink:2.6.1")
     compile("com.zaxxer:HikariCP")
     compile("com.h2database:h2")
     compile("mysql:mysql-connector-java")
     compile("com.vaadin:vaadin-spring-boot-starter:1.0.0")
-    
     
     testCompile("org.springframework.boot:spring-boot-starter-test")
     testCompile("com.jayway.jsonpath:json-path")
