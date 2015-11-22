@@ -1241,7 +1241,7 @@
 									"height": 13,
 									"autoResize": false,
 									"underline": false,
-									"text": "execution",
+									"text": "test_case_execution",
 									"horizontalAlignment": 2,
 									"verticalAlignment": 5
 								},
@@ -2132,7 +2132,7 @@
 									"height": 13,
 									"autoResize": false,
 									"underline": false,
-									"text": "version",
+									"text": "run",
 									"horizontalAlignment": 2,
 									"verticalAlignment": 5
 								},
@@ -3191,7 +3191,7 @@
 									"height": 13,
 									"autoResize": false,
 									"underline": false,
-									"text": "test_run",
+									"text": "execution",
 									"horizontalAlignment": 2,
 									"verticalAlignment": 5
 								},
@@ -3616,7 +3616,7 @@
 									"height": 13,
 									"autoResize": false,
 									"underline": false,
-									"text": "execution_step",
+									"text": "test_step_execution",
 									"horizontalAlignment": 2,
 									"verticalAlignment": 5
 								},
@@ -4922,7 +4922,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFRCpi2RxLz4hM="
 					},
-					"name": "execution",
+					"name": "test_case_execution",
 					"ownedElements": [
 						{
 							"_type": "ERDRelationship",
@@ -5055,7 +5055,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFRCpi2RxLz4hM="
 					},
-					"name": "version",
+					"name": "run",
 					"ownedElements": [
 						{
 							"_type": "ERDRelationship",
@@ -5316,7 +5316,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFRCpi2RxLz4hM="
 					},
-					"name": "test_run",
+					"name": "execution",
 					"columns": [
 						{
 							"_type": "ERDColumn",
@@ -5431,7 +5431,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFRCpi2RxLz4hM="
 					},
-					"name": "execution_step",
+					"name": "test_step_execution",
 					"columns": [
 						{
 							"_type": "ERDColumn",
