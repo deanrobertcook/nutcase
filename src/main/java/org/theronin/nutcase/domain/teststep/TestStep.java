@@ -2,62 +2,49 @@ package org.theronin.nutcase.domain.teststep;
 
 import org.theronin.nutcase.domain.testcase.TestCase;
 import javax.persistence.*;
+import org.theronin.nutcase.domain.base.BaseEntity;
 
-/**
- *
- */
 @Entity
-public class TestStep {
+public class TestStep extends BaseEntity {
 
-		@Id
-		@GeneratedValue
-		private Long id;
+    @ManyToOne
+    private TestCase testCase;
 
-		@ManyToOne
-		private TestCase testCase;
+    private int stepNumber;
 
-		private int stepNumber;
+    private String description;
 
-		private String description;
+    protected TestStep() {
+    }
 
-		protected TestStep() {
-		}
+    public TestStep(TestCase testCase, int stepNumber, String description) {
+        this.testCase = testCase;
+        this.stepNumber = stepNumber;
+        this.description = description;
+    }
 
-		public TestStep(TestCase testCase, int stepNumber, String description) {
-				this.testCase = testCase;
-				this.stepNumber = stepNumber;
-				this.description = description;
-		}
+    public TestCase getTestCase() {
+        return testCase;
+    }
 
-		public Long getId() {
-				return id;
-		}
+    public void setTestCase(TestCase testCase) {
+        this.testCase = testCase;
+    }
 
-		public void setId(Long id) {
-				this.id = id;
-		}
+    public int getStepNumber() {
+        return stepNumber;
+    }
 
-		public TestCase getTestCase() {
-				return testCase;
-		}
+    public void setStepNumber(int stepNumber) {
+        this.stepNumber = stepNumber;
+    }
 
-		public void setTestCase(TestCase testCase) {
-				this.testCase = testCase;
-		}
+    public String getDescription() {
+        return description;
+    }
 
-		public int getStepNumber() {
-				return stepNumber;
-		}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-		public void setStepNumber(int stepNumber) {
-				this.stepNumber = stepNumber;
-		}
-
-		public String getDescription() {
-				return description;
-		}
-
-		public void setDescription(String description) {
-				this.description = description;
-		}
 }

@@ -1,91 +1,86 @@
 package org.theronin.nutcase.domain.testcase;
 
-import org.theronin.nutcase.domain.project.Project;
+import org.theronin.nutcase.domain.run.Run;
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
+import org.theronin.nutcase.domain.base.BaseEntity;
 import org.theronin.nutcase.domain.teststep.TestStep;
 
-/**
- *
- */
 @Entity
-public class TestCase {
+@Table(indexes = {
+    @Index(name = "TEST_ID_INDEX", columnList = "TESTID", unique = true)
+})
+public class TestCase extends BaseEntity {
 
-		@Id
-		@GeneratedValue
-		private Long id;
+    @ManyToOne
+    private Run run;
 
-		@OneToOne
-		private Project project;
+    @Column(unique = true)
+    private String testId;
 
-		//TODO figure out how to make this lazy
-		@OneToMany(fetch = FetchType.EAGER, mappedBy = "testCase")
-		@OrderBy(value = "stepNumber ASC")
-		private Set<TestStep> testSteps = new HashSet<>();
+    @OneToMany
+    private List<TestStep> teststeps;
 
-		private String description;
+    private String description;
 
-		private int weight;
+    private int weight;
 
-		private boolean automated;
+    private boolean automated;
 
-		protected TestCase() {
-		}
+    protected TestCase() {
+    }
 
-		public TestCase(Project project, String description) {
-				this.project = project;
-				this.description = description;
-		}
+    public TestCase(Run run, String description) {
+        this.run = run;
+        this.description = description;
+    }
 
-		@Override
-		public String toString() {
-				StringBuilder sb = new StringBuilder();
-				sb.append(String.format("TestCase: %s\n", description));
-				sb.append(String.format("Number of test Steps: %d\n", testSteps.size()));
-				for (TestStep testStep : testSteps) {
-						sb.append(String.format("\t%d: %s\n", testStep.getStepNumber(), testStep.getDescription()));
-				}
-				return sb.toString();
-		}
+    public Run getRun() {
+        return run;
+    }
 
-		public Long getId() {
-				return id;
-		}
+    public void setRun(Run run) {
+        this.run = run;
+    }
 
-		public void setId(Long id) {
-				this.id = id;
-		}
+    public List<TestStep> getTeststeps() {
+        return teststeps;
+    }
 
-		public Project getProject() {
-				return project;
-		}
+    public void setTeststeps(List<TestStep> teststeps) {
+        this.teststeps = teststeps;
+    }
 
-		public void setProject(Project project) {
-				this.project = project;
-		}
+    public String getDescription() {
+        return description;
+    }
 
-		public String getDescription() {
-				return description;
-		}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-		public void setDescription(String description) {
-				this.description = description;
-		}
+    public int getWeight() {
+        return weight;
+    }
 
-		public int getWeight() {
-				return weight;
-		}
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
 
-		public void setWeight(int weight) {
-				this.weight = weight;
-		}
+    public boolean isAutomated() {
+        return automated;
+    }
 
-		public boolean isAutomated() {
-				return automated;
-		}
+    public void setAutomated(boolean automated) {
+        this.automated = automated;
+    }
 
-		public void setAutomated(boolean automated) {
-				this.automated = automated;
-		}
+    public String getTestId() {
+        return testId;
+    }
+
+    public void setTestId(String testId) {
+        this.testId = testId;
+    }
+
 }
