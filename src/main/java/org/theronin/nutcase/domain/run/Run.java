@@ -21,7 +21,7 @@ public class Run extends BaseEntity {
     @Column(unique = true)
     private String name;
 
-    @ManyToOne
+    @OneToOne
     private Project project;
 
     @OneToMany
@@ -35,7 +35,8 @@ public class Run extends BaseEntity {
     protected Run() {
     }
 
-    public Run(String name, String description) {
+    public Run(Project project, String name, String description) {
+        this.project = project;
         this.name = name;
         this.description = description;
     }
@@ -80,4 +81,8 @@ public class Run extends BaseEntity {
         this.description = description;
     }
 
+    @Override
+    public String toString() {
+        return "Run{" + "name=" + name + ", project=" + project + ", testcases=" + testcases + ", executions=" + executions + ", description=" + description + '}';
+    }
 }

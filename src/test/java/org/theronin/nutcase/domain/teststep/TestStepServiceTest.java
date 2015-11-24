@@ -52,7 +52,7 @@ public class TestStepServiceTest {
     public void shouldCreateTestStep() {
         log.info(name.getMethodName());
         TestStep testStep = new TestStep();
-        testStepService.create(testStep);
+        testStep = testStepService.create(testStep);
         TestStep savedTestStep = testStepService.read(testStep.getId());
         Assert.assertEquals("Returned testStep should have the new ID", testStep.getId(), savedTestStep.getId());
     }
@@ -80,7 +80,7 @@ public class TestStepServiceTest {
         Assert.assertEquals("Returned testStep should have the new ID", testStep.getId(), savedTestStep.getId());
 
         testStep.setStepNumber(2);
-        testStepService.update(testStep);
+        testStep = testStepService.update(testStep);
         TestStep updatedTestStep = testStepService.read(testStep.getId());
         Assert.assertTrue("StepNumber of testStep should be updated", updatedTestStep.getStepNumber() == 2);
     }

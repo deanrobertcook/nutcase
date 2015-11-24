@@ -13,6 +13,7 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.theronin.nutcase.Application;
 import org.theronin.nutcase.domain.base.ConstraintViolationBagException;
+import org.theronin.nutcase.domain.run.RunRepository;
 import org.theronin.nutcase.domain.testcase.TestCaseRepository;
 import org.theronin.nutcase.domain.teststep.TestStepRepository;
 
@@ -32,6 +33,9 @@ public class ProjectServiceTest {
     ProjectRepository projectRepository;
 
     @Inject
+    RunRepository runRepository;
+
+    @Inject
     TestCaseRepository testCaseRepository;
 
     @Inject
@@ -41,7 +45,9 @@ public class ProjectServiceTest {
     public void initTest() {
         testStepRepository.deleteAllInBatch();
         testCaseRepository.deleteAllInBatch();
+        runRepository.deleteAllInBatch();
         projectRepository.deleteAllInBatch();
+
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -102,7 +108,7 @@ public class ProjectServiceTest {
 
         name = "testprojectUpdated";
         project.setName(name);
-        projectService.update(project);
+        project = projectService.update(project);
         Project updatedProject = projectService.read(project.getId());
         Assert.assertTrue("Name of project should be updated", updatedProject.getName().equals(name));
     }

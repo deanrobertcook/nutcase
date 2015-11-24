@@ -102,7 +102,7 @@ public class RunServiceTest {
 
         name = "testrunUpdated";
         run.setName(name);
-        runService.update(run);
+        run = runService.update(run);
         Run updatedRun = runService.read(run.getId());
         Assert.assertTrue("Name of run should be updated", updatedRun.getName().equals(name));
     }

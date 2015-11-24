@@ -12,7 +12,7 @@ import org.theronin.nutcase.domain.teststep.TestStep;
 public class TestCase extends BaseEntity {
 
     @Column(unique = true)
-	private Long testId;
+    private Long testId;
 
     @OneToMany
     private List<TestStep> teststeps;
@@ -62,12 +62,16 @@ public class TestCase extends BaseEntity {
         this.automated = automated;
     }
 
-	public Long getTestId() {
-		return testId;
-	}
+    public Long getTestId() {
+        return testId;
+    }
 
-	public void setTestId(Long testId) {
-		this.testId = testId;
-	}
+    public void setTestId(Long testId) {
+        this.testId = testId;
+    }
 
+    @Override
+    public String toString() {
+        return "TestCase{" + "testId=" + testId + ", teststeps=" + teststeps + ", description=" + description + ", weight=" + weight + ", automated=" + automated + '}';
+    }
 }

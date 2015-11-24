@@ -1,11 +1,13 @@
 package org.theronin.nutcase.domain.project;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.theronin.nutcase.domain.base.BaseEntity;
 import org.theronin.nutcase.domain.run.Run;
+import org.theronin.nutcase.domain.testcase.TestCase;
 
 @Entity
 public class Project extends BaseEntity {
@@ -17,7 +19,10 @@ public class Project extends BaseEntity {
     private String name;
 
     @OneToMany
-    private List<Run> runs;
+    private List<Run> runs = new ArrayList();
+
+    @OneToMany
+    private List<TestCase> testcases = new ArrayList();
 
     private String description;
 
@@ -51,6 +56,19 @@ public class Project extends BaseEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<TestCase> getTestcases() {
+        return testcases;
+    }
+
+    public void setTestcases(List<TestCase> testcases) {
+        this.testcases = testcases;
+    }
+
+    @Override
+    public String toString() {
+        return "Project{" + "name=" + name + ", runs=" + runs + ", testcases=" + testcases + ", description=" + description + '}';
     }
 
 }

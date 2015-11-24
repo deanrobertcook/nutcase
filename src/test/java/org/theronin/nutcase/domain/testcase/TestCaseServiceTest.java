@@ -12,10 +12,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.theronin.nutcase.Application;
+import org.theronin.nutcase.domain.project.ProjectService;
 import org.theronin.nutcase.domain.teststep.TestStepRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
+//@Transactional
 public class TestCaseServiceTest {
 
     private static final Logger log = LoggerFactory.getLogger(TestCaseServiceTest.class);
@@ -25,6 +27,9 @@ public class TestCaseServiceTest {
 
     @Inject
     TestCaseService testCaseService;
+
+    @Inject
+    ProjectService projectService;
 
     @Inject
     TestCaseRepository testCaseRepository;
@@ -56,7 +61,7 @@ public class TestCaseServiceTest {
     public void shouldCreateTestCase() {
         log.info(name.getMethodName());
         TestCase testcase = new TestCase();
-        testCaseService.create(testcase);
+        testcase = testCaseService.create(testcase);
         TestCase savedTestCase = testCaseService.read(testcase.getId());
         Assert.assertEquals("Returned testcase should have the new ID", testcase.getId(), savedTestCase.getId());
     }
@@ -84,8 +89,9 @@ public class TestCaseServiceTest {
         Assert.assertEquals("Returned testcase should have the new ID", testcase.getId(), savedTestCase.getId());
 
         testcase.setAutomated(false);
-        testCaseService.update(testcase);
+        testcase = testCaseService.update(testcase);
         TestCase updatedTestCase = testCaseService.read(testcase.getId());
         Assert.assertTrue("isAutomated of testcase should be updated", updatedTestCase.isAutomated() == false);
     }
+
 }

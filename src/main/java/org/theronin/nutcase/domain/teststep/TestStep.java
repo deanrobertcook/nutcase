@@ -47,4 +47,9 @@ public class TestStep extends BaseEntity {
         this.description = description;
     }
 
+    @Override
+    public String toString() {
+        return "TestStep{" + "testCase=" + testCase + ", stepNumber=" + stepNumber + ", description=" + description + '}';
+    }
+
 }
