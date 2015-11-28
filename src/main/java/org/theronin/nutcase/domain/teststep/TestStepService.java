@@ -31,30 +31,34 @@ public class TestStepService {
     }
 
     @Logged
-    public TestStep create(TestStep testStep) {
+    public TestStepDTO create(TestStepDTO testStep) {
         notNull(testStep, new IllegalArgumentException("TestStep is null"));
         isNull(testStep.getId(), new IllegalArgumentException("TestStep ID should be null"));
-        validateEntity(testStep);
-        return getDefaultRepo().save(testStep);
+        TestStep entity = new TestStep(testStep, 1);
+        validateEntity(entity);
+        return new TestStepDTO(getDefaultRepo().save(entity), 1);
     }
 
     @Logged
-    public void delete(TestStep testStep) {
+    public void delete(TestStepDTO testStep) {
         notNull(testStep, new IllegalArgumentException("TestStep is null"));
         notNull(testStep.getId(), new IllegalArgumentException("TestStep ID should not be null"));
-        getDefaultRepo().delete(testStep);
+        TestStep entity = new TestStep(testStep, 1);
+        getDefaultRepo().delete(entity);
     }
 
     @Logged
-    public TestStep update(TestStep testStep) {
+    public TestStepDTO update(TestStepDTO testStep) {
         notNull(testStep, new IllegalArgumentException("TestStep is null"));
         notNull(testStep.getId(), new IllegalArgumentException("TestStep ID should not be null"));
-        validateEntity(testStep);
-        return getDefaultRepo().save(testStep);
+        TestStep entity = new TestStep(testStep, 1);
+        validateEntity(entity);
+        return new TestStepDTO(getDefaultRepo().save(entity), 1);
     }
 
     @Logged
-    public TestStep read(Long id) {
-        return getDefaultRepo().findOne(id);
+    public TestStepDTO read(Long id) {
+        TestStep entity = getDefaultRepo().findOne(id);
+        return entity == null ? null : new TestStepDTO(entity, 1);
     }
 }

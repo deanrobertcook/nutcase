@@ -24,30 +24,40 @@ public class RunService {
     }
 
     @Logged
-    public Run create(Run run) {
+    public RunDTO create(RunDTO run) {
         notNull(run, new IllegalArgumentException("Run is null"));
         isNull(run.getId(), new IllegalArgumentException("Run ID should be null"));
-        validateEntity(run);
-        return getDefaultRepo().save(run);
+        Run entity = new Run(run, 2);
+        validateEntity(entity);
+        return new RunDTO(getDefaultRepo().save(entity), 2);
     }
 
     @Logged
-    public void delete(Run run) {
+    public void delete(RunDTO run) {
         notNull(run, new IllegalArgumentException("Run is null"));
         notNull(run.getId(), new IllegalArgumentException("Run ID should not be null"));
-        getDefaultRepo().delete(run);
+        Run entity = new Run(run, 1);
+        getDefaultRepo().delete(entity);
     }
 
     @Logged
-    public Run update(Run run) {
+    public RunDTO update(RunDTO run) {
         notNull(run, new IllegalArgumentException("Run is null"));
         notNull(run.getId(), new IllegalArgumentException("Run ID should not be null"));
-        validateEntity(run);
-        return getDefaultRepo().save(run);
+        Run entity = new Run(run, 2);
+        validateEntity(entity);
+        return new RunDTO(getDefaultRepo().save(entity), 2);
     }
 
     @Logged
-    public Run read(Long id) {
-        return getDefaultRepo().findOne(id);
+    public RunDTO read(Long id) {
+        Run entity = getDefaultRepo().findOne(id);
+        return entity == null ? null : new RunDTO(entity, 1);
+    }
+
+    @Logged
+    public RunDTO readWithTestcasesAndExecutions(Long id) {
+        Run entity = getDefaultRepo().findOne(id);
+        return entity == null ? null : new RunDTO(entity, 2);
     }
 }

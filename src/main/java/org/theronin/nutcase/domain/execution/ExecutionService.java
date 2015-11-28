@@ -30,30 +30,40 @@ public class ExecutionService {
     }
 
     @Logged
-    public Execution create(Execution execution) {
+    public ExecutionDTO create(ExecutionDTO execution) {
         notNull(execution, new IllegalArgumentException("Execution is null"));
         isNull(execution.getId(), new IllegalArgumentException("Execution ID should be null"));
-        validateEntity(execution);
-        return getDefaultRepo().save(execution);
+        Execution entity = new Execution(execution, 2);
+        validateEntity(entity);
+        return new ExecutionDTO(getDefaultRepo().save(entity), 2);
     }
 
     @Logged
-    public void delete(Execution execution) {
+    public void delete(ExecutionDTO execution) {
         notNull(execution, new IllegalArgumentException("Execution is null"));
         notNull(execution.getId(), new IllegalArgumentException("Execution ID should not be null"));
-        getDefaultRepo().delete(execution);
+        Execution entity = new Execution(execution, 1);
+        getDefaultRepo().delete(entity);
     }
 
     @Logged
-    public Execution update(Execution execution) {
+    public ExecutionDTO update(ExecutionDTO execution) {
         notNull(execution, new IllegalArgumentException("Execution is null"));
         notNull(execution.getId(), new IllegalArgumentException("Execution ID should not be null"));
-        validateEntity(execution);
-        return getDefaultRepo().save(execution);
+        Execution entity = new Execution(execution, 2);
+        validateEntity(entity);
+        return new ExecutionDTO(getDefaultRepo().save(entity), 2);
     }
 
     @Logged
-    public Execution read(Long id) {
-        return getDefaultRepo().findOne(id);
+    public ExecutionDTO read(Long id) {
+        Execution entity = getDefaultRepo().findOne(id);
+        return entity == null ? null : new ExecutionDTO(entity, 1);
+    }
+
+    @Logged
+    public ExecutionDTO readWithTestCaseExecutions(Long id) {
+        Execution entity = getDefaultRepo().findOne(id);
+        return entity == null ? null : new ExecutionDTO(entity, 2);
     }
 }

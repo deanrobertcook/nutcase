@@ -1,22 +1,18 @@
 package org.theronin.nutcase.domain.base;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
-@MappedSuperclass
-public abstract class BaseEntity implements Serializable {
+public abstract class BaseDTO implements Serializable {
 
-    @Id
-    @GeneratedValue
     private Long id;
 
-    protected BaseEntity() {
+    public BaseDTO() {
     }
 
-    public BaseEntity(BaseDTO dto) {
-        if (dto != null) {
-            this.id = dto.getId();
+    public BaseDTO(BaseEntity entity) {
+        if (entity != null) {
+            this.id = entity.getId();
         }
     }
 
@@ -43,7 +39,7 @@ public abstract class BaseEntity implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final BaseEntity other = (BaseEntity) obj;
+        final BaseDTO other = (BaseDTO) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }

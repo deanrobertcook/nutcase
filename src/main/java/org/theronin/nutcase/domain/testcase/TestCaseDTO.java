@@ -1,25 +1,18 @@
 package org.theronin.nutcase.domain.testcase;
 
 import java.util.ArrayList;
-import javax.persistence.*;
 import java.util.List;
 import javax.validation.constraints.NotNull;
-import org.theronin.nutcase.domain.base.BaseEntity;
+import org.theronin.nutcase.domain.base.BaseDTO;
 import org.theronin.nutcase.domain.teststep.TestStep;
 import org.theronin.nutcase.domain.teststep.TestStepDTO;
 
-@Entity
-@Table(indexes = {
-    @Index(name = "TEST_ID_INDEX", columnList = "TESTID", unique = true)
-})
-public class TestCase extends BaseEntity {
+public class TestCaseDTO extends BaseDTO {
 
     @NotNull
-    @Column(unique = true)
     private Long testId;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<TestStep> teststeps = new ArrayList<>();
+    private List<TestStepDTO> teststeps = new ArrayList<>();
 
     private String description;
 
@@ -27,35 +20,30 @@ public class TestCase extends BaseEntity {
 
     private boolean automated;
 
-    protected TestCase() {
+    public TestCaseDTO() {
     }
 
-    public TestCase(TestCaseDTO dto, int mappingDept) {
-        super(dto);
-        if (dto != null) {
+    public TestCaseDTO(TestCase entity, int mappingDept) {
+        super(entity);
+        if (entity != null) {
             mappingDept--;
-            this.testId = dto.getTestId();
-            this.description = dto.getDescription();
-            this.weight = dto.getWeight();
-            this.automated = dto.isAutomated();
+            this.testId = entity.getTestId();
+            this.description = entity.getDescription();
+            this.weight = entity.getWeight();
+            this.automated = entity.isAutomated();
             if (mappingDept > 0) {
-                for (TestStepDTO teststep : dto.getTeststeps()) {
-                    teststeps.add(new TestStep(teststep, mappingDept));
+                for (TestStep teststep : entity.getTeststeps()) {
+                    teststeps.add(new TestStepDTO(teststep, mappingDept));
                 }
             }
         }
     }
 
-    public TestCase(Long testId, String description) {
-        this.testId = testId;
-        this.description = description;
-    }
-
-    public List<TestStep> getTeststeps() {
+    public List<TestStepDTO> getTeststeps() {
         return teststeps;
     }
 
-    public void setTeststeps(List<TestStep> teststeps) {
+    public void setTeststeps(List<TestStepDTO> teststeps) {
         this.teststeps = teststeps;
     }
 
@@ -93,8 +81,9 @@ public class TestCase extends BaseEntity {
 
     @Override
     public String toString() {
-        return "TestCase{" + "testId=" + testId + ", teststeps=" + teststeps + ", description=" + description + ", weight=" + weight + ", automated=" + automated + '}';
+        return "TestCaseDTO{" + "testId=" + testId + ", teststeps=" + teststeps + ", description=" + description + ", weight=" + weight + ", automated=" + automated + '}';
     }
+
 
 
 }

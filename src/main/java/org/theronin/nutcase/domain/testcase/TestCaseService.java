@@ -24,30 +24,41 @@ public class TestCaseService {
     }
 
     @Logged
-    public TestCase create(TestCase testCase) {
+    public TestCaseDTO create(TestCaseDTO testCase) {
         notNull(testCase, new IllegalArgumentException("TestCase is null"));
         isNull(testCase.getId(), new IllegalArgumentException("TestCase ID should be null"));
-        validateEntity(testCase);
-        return getDefaultRepo().save(testCase);
+        TestCase entity = new TestCase(testCase, 2);
+        validateEntity(entity);
+        return new TestCaseDTO(getDefaultRepo().save(entity), 2);
     }
 
     @Logged
-    public void delete(TestCase testCase) {
+    public void delete(TestCaseDTO testCase) {
         notNull(testCase, new IllegalArgumentException("TestCase is null"));
         notNull(testCase.getId(), new IllegalArgumentException("TestCase ID should not be null"));
-        getDefaultRepo().delete(testCase);
+        TestCase entity = new TestCase(testCase, 1);
+        validateEntity(entity);
+        getDefaultRepo().delete(entity);
     }
 
     @Logged
-    public TestCase update(TestCase testCase) {
+    public TestCaseDTO update(TestCaseDTO testCase) {
         notNull(testCase, new IllegalArgumentException("TestCase is null"));
         notNull(testCase.getId(), new IllegalArgumentException("TestCase ID should not be null"));
-        validateEntity(testCase);
-        return getDefaultRepo().save(testCase);
+        TestCase entity = new TestCase(testCase, 2);
+        validateEntity(entity);
+        return new TestCaseDTO(getDefaultRepo().save(entity), 2);
     }
 
     @Logged
-    public TestCase read(Long id) {
-        return getDefaultRepo().findOne(id);
+    public TestCaseDTO read(Long id) {
+        TestCase entity = getDefaultRepo().findOne(id);
+        return entity == null ? null : new TestCaseDTO(entity, 1);
+    }
+
+    @Logged
+    public TestCaseDTO readWithSteps(Long id) {
+        TestCase entity = getDefaultRepo().findOne(id);
+        return entity == null ? null : new TestCaseDTO(entity, 2);
     }
 }

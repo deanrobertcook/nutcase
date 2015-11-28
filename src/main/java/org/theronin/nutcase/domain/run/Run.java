@@ -1,13 +1,15 @@
 package org.theronin.nutcase.domain.run;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.theronin.nutcase.domain.base.BaseEntity;
 import org.theronin.nutcase.domain.execution.Execution;
-import org.theronin.nutcase.domain.project.Project;
+import org.theronin.nutcase.domain.execution.ExecutionDTO;
 import org.theronin.nutcase.domain.testcase.TestCase;
+import org.theronin.nutcase.domain.testcase.TestCaseDTO;
 
 @Entity
 @Table(indexes = {
@@ -21,32 +23,37 @@ public class Run extends BaseEntity {
     @Column(unique = true)
     private String name;
 
-    @OneToOne
-    private Project project;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<TestCase> testcases = new ArrayList<>();
 
-    @OneToMany
-    private List<TestCase> testcases;
-
-    @OneToMany
-    private List<Execution> executions;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Execution> executions = new ArrayList<>();
 
     private String description;
 
     protected Run() {
     }
 
-    public Run(Project project, String name, String description) {
-        this.project = project;
+    public Run(RunDTO dto, int mappingDept) {
+        super(dto);
+        if (dto != null) {
+            mappingDept--;
+            this.name = dto.getName();
+            this.description = dto.getDescription();
+            if (mappingDept > 0) {
+                for (TestCaseDTO testcase : dto.getTestcases()) {
+                    testcases.add(new TestCase(testcase, mappingDept));
+                }
+                for (ExecutionDTO execution : dto.getExecutions()) {
+                    executions.add(new Execution(execution, mappingDept));
+                }
+            }
+        }
+    }
+
+    public Run(String name, String description) {
         this.name = name;
         this.description = description;
-    }
-
-    public Project getProject() {
-        return project;
-    }
-
-    public void setProject(Project project) {
-        this.project = project;
     }
 
     public String getName() {
@@ -83,6 +90,8 @@ public class Run extends BaseEntity {
 
     @Override
     public String toString() {
-        return "Run{" + "name=" + name + ", project=" + project + ", testcases=" + testcases + ", executions=" + executions + ", description=" + description + '}';
+        return "Run{" + "name=" + name + ", testcases=" + testcases + ", executions=" + executions + ", description=" + description + '}';
     }
+
+
 }

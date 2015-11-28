@@ -24,30 +24,40 @@ public class TestCaseExecutionService {
     }
 
     @Logged
-    public TestCaseExecution create(TestCaseExecution testCaseExecution) {
+    public TestCaseExecutionDTO create(TestCaseExecutionDTO testCaseExecution) {
         notNull(testCaseExecution, new IllegalArgumentException("TestCaseExecution is null"));
         isNull(testCaseExecution.getId(), new IllegalArgumentException("TestCaseExecution ID should be null"));
-        validateEntity(testCaseExecution);
-        return getDefaultRepo().save(testCaseExecution);
+        TestCaseExecution entity = new TestCaseExecution(testCaseExecution, 2);
+        validateEntity(entity);
+        return new TestCaseExecutionDTO(getDefaultRepo().save(entity), 2);
     }
 
     @Logged
-    public void delete(TestCaseExecution testCaseExecution) {
+    public void delete(TestCaseExecutionDTO testCaseExecution) {
         notNull(testCaseExecution, new IllegalArgumentException("TestCaseExecution is null"));
         notNull(testCaseExecution.getId(), new IllegalArgumentException("TestCaseExecution ID should not be null"));
-        getDefaultRepo().delete(testCaseExecution);
+        TestCaseExecution entity = new TestCaseExecution(testCaseExecution, 1);
+        getDefaultRepo().delete(entity);
     }
 
     @Logged
-    public TestCaseExecution update(TestCaseExecution testCaseExecution) {
+    public TestCaseExecutionDTO update(TestCaseExecutionDTO testCaseExecution) {
         notNull(testCaseExecution, new IllegalArgumentException("TestCaseExecution is null"));
         notNull(testCaseExecution.getId(), new IllegalArgumentException("TestCaseExecution ID should not be null"));
-        validateEntity(testCaseExecution);
-        return getDefaultRepo().save(testCaseExecution);
+        TestCaseExecution entity = new TestCaseExecution(testCaseExecution, 2);
+        validateEntity(entity);
+        return new TestCaseExecutionDTO(getDefaultRepo().save(entity), 2);
     }
 
     @Logged
-    public TestCaseExecution read(Long id) {
-        return getDefaultRepo().findOne(id);
+    public TestCaseExecutionDTO read(Long id) {
+        TestCaseExecution entity = getDefaultRepo().findOne(id);
+        return entity == null ? null : new TestCaseExecutionDTO(entity, 1);
+    }
+
+    @Logged
+    public TestCaseExecutionDTO readWithTestStepExecutions(Long id) {
+        TestCaseExecution entity = getDefaultRepo().findOne(id);
+        return entity == null ? null : new TestCaseExecutionDTO(entity, 2);
     }
 }

@@ -2,42 +2,34 @@ package org.theronin.nutcase.domain.execution;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import org.theronin.nutcase.domain.base.BaseEntity;
+import org.theronin.nutcase.domain.base.BaseDTO;
 import org.theronin.nutcase.domain.execution.testcaseexecution.TestCaseExecution;
 import org.theronin.nutcase.domain.execution.testcaseexecution.TestCaseExecutionDTO;
 
-@Entity
-@Table(indexes = {
-    @Index(name = "EXECUTION_NAME_INDEX", columnList = "NAME")
-})
-public class Execution extends BaseEntity {
+public class ExecutionDTO extends BaseDTO {
 
     @NotNull
     @Size(min = 1, max = 255)
-    @Basic(optional = false)
-    @Column(unique = true)
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<TestCaseExecution> testCaseExecutions = new ArrayList<>();
+    private List<TestCaseExecutionDTO> testCaseExecutions = new ArrayList<>();
 
     private String description;
 
-    protected Execution() {
+    public ExecutionDTO() {
     }
 
-    public Execution(ExecutionDTO dto, int mappingDept) {
-        super(dto);
-        if (dto != null) {
+    public ExecutionDTO(Execution entity, int mappingDept) {
+        super(entity);
+        if (entity != null) {
             mappingDept--;
-            this.name = dto.getName();
-            this.description = dto.getDescription();
+            this.name = entity.getName();
+            this.description = entity.getDescription();
             if (mappingDept > 0) {
-                for (TestCaseExecutionDTO testCaseExecution : dto.getTestCaseExecutions()) {
-                    testCaseExecutions.add(new TestCaseExecution(testCaseExecution, mappingDept));
+                for (TestCaseExecution testcase : entity.getTestCaseExecutions()) {
+                    testCaseExecutions.add(new TestCaseExecutionDTO(testcase, mappingDept));
                 }
             }
         }
@@ -51,11 +43,11 @@ public class Execution extends BaseEntity {
         this.name = name;
     }
 
-    public List<TestCaseExecution> getTestCaseExecutions() {
+    public List<TestCaseExecutionDTO> getTestCaseExecutions() {
         return testCaseExecutions;
     }
 
-    public void setTestCaseExecutions(List<TestCaseExecution> testCaseExecutions) {
+    public void setTestCaseExecutions(List<TestCaseExecutionDTO> testCaseExecutions) {
         this.testCaseExecutions = testCaseExecutions;
     }
 
