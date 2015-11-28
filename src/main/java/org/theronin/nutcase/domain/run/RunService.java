@@ -51,12 +51,14 @@ public class RunService {
 
     @Logged
     public RunDTO read(Long id) {
+        notNull(id, new IllegalArgumentException("ID is null"));
         Run entity = getDefaultRepo().findOne(id);
         return entity == null ? null : new RunDTO(entity, 1);
     }
 
     @Logged
     public RunDTO readWithTestcasesAndExecutions(Long id) {
+        notNull(id, new IllegalArgumentException("ID is null"));
         Run entity = getDefaultRepo().findOne(id);
         return entity == null ? null : new RunDTO(entity, 2);
     }

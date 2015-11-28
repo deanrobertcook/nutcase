@@ -58,6 +58,7 @@ public class TestStepService {
 
     @Logged
     public TestStepDTO read(Long id) {
+        notNull(id, new IllegalArgumentException("ID is null"));
         TestStep entity = getDefaultRepo().findOne(id);
         return entity == null ? null : new TestStepDTO(entity, 1);
     }

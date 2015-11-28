@@ -57,12 +57,14 @@ public class ExecutionService {
 
     @Logged
     public ExecutionDTO read(Long id) {
+        notNull(id, new IllegalArgumentException("ID is null"));
         Execution entity = getDefaultRepo().findOne(id);
         return entity == null ? null : new ExecutionDTO(entity, 1);
     }
 
     @Logged
     public ExecutionDTO readWithTestCaseExecutions(Long id) {
+        notNull(id, new IllegalArgumentException("ID is null"));
         Execution entity = getDefaultRepo().findOne(id);
         return entity == null ? null : new ExecutionDTO(entity, 2);
     }
