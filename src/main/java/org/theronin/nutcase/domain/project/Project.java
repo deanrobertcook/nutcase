@@ -1,11 +1,15 @@
 package org.theronin.nutcase.domain.project;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.theronin.nutcase.domain.base.BaseEntity;
 import org.theronin.nutcase.domain.run.Run;
+import org.theronin.nutcase.domain.run.RunDTO;
+import org.theronin.nutcase.domain.testcase.TestCase;
+import org.theronin.nutcase.domain.testcase.TestCaseDTO;
 
 @Entity
 public class Project extends BaseEntity {
@@ -16,12 +20,32 @@ public class Project extends BaseEntity {
     @Column(unique = true)
     private String name;
 
-    @OneToMany
-    private List<Run> runs;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Run> runs = new ArrayList();
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<TestCase> testcases = new ArrayList();
 
     private String description;
 
     protected Project() {
+    }
+
+    public Project(ProjectDTO dto, int mappingDept) {
+        super(dto);
+        if (dto != null) {
+            mappingDept--;
+            this.name = dto.getName();
+            this.description = dto.getDescription();
+            if (mappingDept > 0) {
+                for (RunDTO run : dto.getRuns()) {
+                    runs.add(new Run(run, mappingDept));
+                }
+                for (TestCaseDTO testcase : dto.getTestcases()) {
+                    testcases.add(new TestCase(testcase, mappingDept));
+                }
+            }
+        }
     }
 
     public Project(String name, String description) {
@@ -52,5 +76,19 @@ public class Project extends BaseEntity {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public List<TestCase> getTestcases() {
+        return testcases;
+    }
+
+    public void setTestcases(List<TestCase> testcases) {
+        this.testcases = testcases;
+    }
+
+    @Override
+    public String toString() {
+        return "Project{" + "name=" + name + ", runs=" + runs + ", testcases=" + testcases + ", description=" + description + '}';
+    }
+
 
 }

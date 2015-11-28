@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.theronin.nutcase.Application;
+import org.theronin.nutcase.domain.testcase.TestCaseRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
@@ -28,8 +29,12 @@ public class TestStepServiceTest {
     @Inject
     TestStepRepository testStepRepository;
 
+    @Inject
+    TestCaseRepository testCaseRepository;
+
     @Before
     public void initTest() {
+        testCaseRepository.deleteAllInBatch();
         testStepRepository.deleteAllInBatch();
     }
 
@@ -43,7 +48,7 @@ public class TestStepServiceTest {
     @Test(expected = IllegalArgumentException.class)
     public void shouldNotCreateTestStepWithID() {
         log.info(name.getMethodName());
-        TestStep testStep = new TestStep();
+        TestStepDTO testStep = new TestStepDTO();
         testStep.setId(Long.MAX_VALUE);
         testStepService.create(testStep);
     }
@@ -51,37 +56,39 @@ public class TestStepServiceTest {
     @Test
     public void shouldCreateTestStep() {
         log.info(name.getMethodName());
-        TestStep testStep = new TestStep();
-        testStepService.create(testStep);
-        TestStep savedTestStep = testStepService.read(testStep.getId());
+        TestStepDTO testStep = new TestStepDTO();
+        testStep = testStepService.create(testStep);
+        TestStepDTO savedTestStep = testStepService.read(testStep.getId());
         Assert.assertEquals("Returned testStep should have the new ID", testStep.getId(), savedTestStep.getId());
     }
 
     @Test
     public void shouldDeleteTestStep() {
         log.info(name.getMethodName());
-        TestStep testStep = new TestStep();
+        TestStepDTO testStep = new TestStepDTO();
         testStep = testStepService.create(testStep);
-        TestStep savedTestStep = testStepService.read(testStep.getId());
+        TestStepDTO savedTestStep = testStepService.read(testStep.getId());
         Assert.assertEquals("Returned testStep should have the new ID", testStep.getId(), savedTestStep.getId());
 
         testStepService.delete(testStep);
-        TestStep deletedTestStep = testStepService.read(testStep.getId());
+        TestStepDTO deletedTestStep = testStepService.read(testStep.getId());
         Assert.assertTrue("TestStep should not be found anymore", deletedTestStep == null);
     }
 
     @Test
     public void shouldUpdateTestStep() {
         log.info(name.getMethodName());
-        TestStep testStep = new TestStep();
-        testStep.setStepNumber(1);
+        TestStepDTO testStep = new TestStepDTO();
+        testStep.setDescription("stepDesc1");
         testStep = testStepService.create(testStep);
-        TestStep savedTestStep = testStepService.read(testStep.getId());
+        TestStepDTO savedTestStep = testStepService.read(testStep.getId());
         Assert.assertEquals("Returned testStep should have the new ID", testStep.getId(), savedTestStep.getId());
+        Assert.assertTrue("Description of testStep should be set", savedTestStep.getDescription().equals("stepDesc1"));
 
-        testStep.setStepNumber(2);
-        testStepService.update(testStep);
-        TestStep updatedTestStep = testStepService.read(testStep.getId());
-        Assert.assertTrue("StepNumber of testStep should be updated", updatedTestStep.getStepNumber() == 2);
+        testStep.setDescription("stepDesc2");
+        testStep = testStepService.update(testStep);
+        TestStepDTO updatedTestStep = testStepService.read(testStep.getId());
+        Assert.assertTrue("Description of testStep should be updated", updatedTestStep.getDescription().equals("stepDesc2"));
     }
+
 }

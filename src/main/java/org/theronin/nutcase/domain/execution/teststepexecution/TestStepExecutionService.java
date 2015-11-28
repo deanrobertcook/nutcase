@@ -24,30 +24,35 @@ public class TestStepExecutionService {
     }
 
     @Logged
-    public TestStepExecution create(TestStepExecution testStepExecution) {
+    public TestStepExecutionDTO create(TestStepExecutionDTO testStepExecution) {
         notNull(testStepExecution, new IllegalArgumentException("TestStepExecution is null"));
         isNull(testStepExecution.getId(), new IllegalArgumentException("TestStepExecution ID should be null"));
-        validateEntity(testStepExecution);
-        return getDefaultRepo().save(testStepExecution);
+        TestStepExecution entity = new TestStepExecution(testStepExecution, 1);
+        validateEntity(entity);
+        return new TestStepExecutionDTO(getDefaultRepo().save(entity), 1);
     }
 
     @Logged
-    public void delete(TestStepExecution testStepExecution) {
+    public void delete(TestStepExecutionDTO testStepExecution) {
         notNull(testStepExecution, new IllegalArgumentException("TestStepExecution is null"));
         notNull(testStepExecution.getId(), new IllegalArgumentException("TestStepExecution ID should not be null"));
-        getDefaultRepo().delete(testStepExecution);
+        TestStepExecution entity = new TestStepExecution(testStepExecution, 1);
+        getDefaultRepo().delete(entity);
     }
 
     @Logged
-    public TestStepExecution update(TestStepExecution testStepExecution) {
+    public TestStepExecutionDTO update(TestStepExecutionDTO testStepExecution) {
         notNull(testStepExecution, new IllegalArgumentException("TestStepExecution is null"));
         notNull(testStepExecution.getId(), new IllegalArgumentException("TestStepExecution ID should not be null"));
-        validateEntity(testStepExecution);
-        return getDefaultRepo().save(testStepExecution);
+        TestStepExecution entity = new TestStepExecution(testStepExecution, 1);
+        validateEntity(entity);
+        return new TestStepExecutionDTO(getDefaultRepo().save(entity), 1);
     }
 
     @Logged
-    public TestStepExecution read(Long id) {
-        return getDefaultRepo().findOne(id);
+    public TestStepExecutionDTO read(Long id) {
+        TestStepExecution entity = getDefaultRepo().findOne(id);
+        return entity == null ? null : new TestStepExecutionDTO(entity, 1);
     }
+
 }

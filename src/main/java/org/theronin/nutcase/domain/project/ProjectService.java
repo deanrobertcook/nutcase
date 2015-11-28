@@ -24,30 +24,40 @@ public class ProjectService {
     }
 
     @Logged
-    public Project create(Project project) {
-        notNull(project, new IllegalArgumentException("Project is null"));
-        isNull(project.getId(), new IllegalArgumentException("Project ID should be null"));
-        validateEntity(project);
-        return getDefaultRepo().save(project);
+    public ProjectDTO create(ProjectDTO project) {
+        notNull(project, new IllegalArgumentException("ProjectDTO is null"));
+        isNull(project.getId(), new IllegalArgumentException("ProjectDTO ID should be null"));
+        Project entity = new Project(project, 2);
+        validateEntity(entity);
+        return new ProjectDTO(getDefaultRepo().save(entity), 2);
     }
 
     @Logged
-    public void delete(Project project) {
-        notNull(project, new IllegalArgumentException("Project is null"));
-        notNull(project.getId(), new IllegalArgumentException("Project ID should not be null"));
-        getDefaultRepo().delete(project);
+    public void delete(ProjectDTO project) {
+        notNull(project, new IllegalArgumentException("ProjectDTO is null"));
+        notNull(project.getId(), new IllegalArgumentException("ProjectDTO ID should not be null"));
+        Project entity = new Project(project, 1);
+        getDefaultRepo().delete(entity);
     }
 
     @Logged
-    public Project update(Project project) {
-        notNull(project, new IllegalArgumentException("Project is null"));
-        notNull(project.getId(), new IllegalArgumentException("Project ID should not be null"));
-        validateEntity(project);
-        return getDefaultRepo().save(project);
+    public ProjectDTO update(ProjectDTO project) {
+        notNull(project, new IllegalArgumentException("ProjectDTO is null"));
+        notNull(project.getId(), new IllegalArgumentException("ProjectDTO ID should not be null"));
+        Project entity = new Project(project, 2);
+        validateEntity(entity);
+        return new ProjectDTO(getDefaultRepo().save(entity), 2);
     }
 
     @Logged
-    public Project read(Long id) {
-        return getDefaultRepo().findOne(id);
+    public ProjectDTO read(Long id) {
+        Project entity = getDefaultRepo().findOne(id);
+        return entity == null ? null : new ProjectDTO(entity, 1);
+    }
+
+    @Logged
+    public ProjectDTO readWithRunsAndTestcases(Long id) {
+        Project entity = getDefaultRepo().findOne(id);
+        return entity == null ? null : new ProjectDTO(entity, 2);
     }
 }

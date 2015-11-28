@@ -3,7 +3,10 @@ package org.theronin.nutcase.domain;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.theronin.nutcase.config.logging.Logged;
+import org.theronin.nutcase.domain.project.Project;
+import org.theronin.nutcase.domain.project.ProjectRepository;
 import org.theronin.nutcase.domain.run.Run;
 import org.theronin.nutcase.domain.run.RunRepository;
 import org.theronin.nutcase.domain.testcase.TestCase;
@@ -14,61 +17,76 @@ import org.theronin.nutcase.domain.user.NutcaseUser;
 import org.theronin.nutcase.domain.user.NutcaseUserRepository;
 
 @Service
+@Transactional
 public class TestService {
 
-    @Inject
-    TestStepRepository testStepRepository;
+	@Inject
+	TestStepRepository testStepRepository;
 
-    @Inject
-    TestCaseRepository testCaseRepository;
+	@Inject
+	TestCaseRepository testCaseRepository;
 
-    @Inject
-    RunRepository projectRepository;
+	@Inject
+	RunRepository runRepository;
 
-    @Inject
-    NutcaseUserRepository userRepository;
+	@Inject
+	ProjectRepository projectRepository;
 
-    @Logged
-    @PostConstruct
-    public void init() {
-        testStepRepository.deleteAllInBatch();
-        testCaseRepository.deleteAllInBatch();
-        projectRepository.deleteAllInBatch();
-        userRepository.deleteAllInBatch();
+	@Inject
+	NutcaseUserRepository userRepository;
 
-        NutcaseUser user1 = new NutcaseUser("test1@wire.com", "password");
-        NutcaseUser user2 = new NutcaseUser("test2@wire.com", "password");
+	@Logged
+	@PostConstruct
+	public void init() {
+		
+		testStepRepository.deleteAllInBatch();
+		runRepository.deleteAllInBatch();
+		testCaseRepository.deleteAllInBatch();
+		projectRepository.deleteAllInBatch();
+		userRepository.deleteAllInBatch();
 
-        userRepository.save(user1);
-        userRepository.save(user2);
+		NutcaseUser user1 = new NutcaseUser("test1@wire.com", "password");
+		NutcaseUser user2 = new NutcaseUser("test2@wire.com", "password");
 
-        Run someProject = new Run("Android", "The Android project.");
+		userRepository.save(user1);
+		userRepository.save(user2);
 
-        projectRepository.save(someProject);
-        projectRepository.save(new Run("iOS", "The iOS project."));
-        projectRepository.save(new Run("WebApp", "The WebApp project."));
+		Project android = new Project("Android", "The Android project.");
+		android = projectRepository.save(android);
 
-        TestCase testCase1 = new TestCase(someProject, "Test that the cursor works");
-        TestCase testCase2 = new TestCase(someProject, "Test that scrolling works");
-        testCaseRepository.save(testCase1);
-        testCaseRepository.save(testCase2);
+        Run run1 = new Run("Full RC", "Full RC for Android");
+        Run run2 = new Run("Calling", "Calling testrun for Android");
 
-        addSomeTestSteps(testCase1, testStepRepository, user1);
-        addSomeTestSteps(testCase2, testStepRepository, user1);
+        runRepository.save(run1);
+        runRepository.save(run2);
+        android.getRuns().add(run1);
+        android.getRuns().add(run2);
+        android = projectRepository.save(android);
 
-        System.out.println("All Test cases for project Android:");
-        for (TestCase testCase : testCaseRepository.findByRunName("Android")) {
-            System.out.println(testCase.toString());
-        }
-    }
+        TestCase testCase1 = new TestCase(12L, "Test that the cursor works");
+        TestCase testCase2 = new TestCase(13L, "Test that scrolling works");
+		testCaseRepository.save(testCase1);
+		testCaseRepository.save(testCase2);
 
-    @Logged
-    private void addSomeTestSteps(TestCase testCase, TestStepRepository testStepRepository, NutcaseUser user) {
-        testStepRepository.save(new TestStep(testCase, 1, "Do something to: " + testCase.getDescription()));
-        testStepRepository.save(new TestStep(testCase, 2, "Do something to: " + testCase.getDescription()));
-        testStepRepository.save(new TestStep(testCase, 3, "Do something to: " + testCase.getDescription()));
-        testStepRepository.save(new TestStep(testCase, 4, "Do something to: " + testCase.getDescription()));
-        testStepRepository.save(new TestStep(testCase, 5, "Do something to: " + testCase.getDescription()));
+        addSomeTestSteps(testCase1, testCaseRepository, user1);
+        addSomeTestSteps(testCase2, testCaseRepository, user1);
+	}
+
+	@Logged
+    private void addSomeTestSteps(TestCase testCase, TestCaseRepository testCaseRepository, NutcaseUser user) {
+        TestStep testStep1 = new TestStep("Do something to: " + testCase.getDescription());
+        TestStep testStep2 = new TestStep("Do something to: " + testCase.getDescription());
+        TestStep testStep3 = new TestStep("Do something to: " + testCase.getDescription());
+        TestStep testStep4 = new TestStep("Do something to: " + testCase.getDescription());
+        TestStep testStep5 = new TestStep("Do something to: " + testCase.getDescription());
+
+        testCase.getTeststeps().add(testStep1);
+        testCase.getTeststeps().add(testStep2);
+        testCase.getTeststeps().add(testStep3);
+        testCase.getTeststeps().add(testStep4);
+        testCase.getTeststeps().add(testStep5);
+
+        testCaseRepository.save(testCase);
     }
 
 }

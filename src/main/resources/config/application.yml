@@ -1,13 +1,38 @@
 server:
     port: 8080
-logging:
-    file: nutcase.log
 security:
     basic.enabled: false
 spring:
-    application.name: nutcase
     profiles:
-        active: dev
+        active: @profile@
+    application.name: nutcase
+    jpa:
+        open-in-view: false
+        show_sql: false
+    hibernate:
+        ddl-auto: update
+        naming-strategy: org.springframework.boot.orm.jpa.hibernate.SpringNamingStrategy
+    messages:
+        basename: classpath:/i18n/messages
+    mvc:
+        favicon:
+            enabled: false
+    thymeleaf:
+        mode: XHTML
+# Spring boot admin does not work with spring boot 1.3 if logfile endpoint is enabled
+# https://github.com/codecentric/spring-boot-admin/issues/117
+endpoints:
+    logfile:
+        enabled: false
+        
+nc:
+    mail:
+        from: noreply@nutcase.com
+
+---
+
+spring:
+    profiles: dev
     devtools:
         restart:
             enabled: true
@@ -16,50 +41,44 @@ spring:
     datasource:
         platform: h2
         driver-class-name: org.h2.jdbcx.JdbcDataSource
-        url: jdbc:h2:mem:nutcase;DB_CLOSE_DELAY=-1
-        name:
+        url: jdbc:h2:mem:nutcase;DB_CLOSE_ON_EXIT=FALSE
         username: sa
         password:
     jpa:
-#        open-in-view: false
-#        database: H2
+        database: H2
 #        database-platform: org.theronin.nutcase.config.persistence.FixedH2Dialect
-#        show_sql: true
+        show_sql: false
         properties:
-            eclipselink.weaving: false
-            eclipselink.ddl-generation: create-tables
-#            hibernate.cache.use_second_level_cache: false
-#            hibernate.cache.use_query_cache: false
-#            hibernate.generate_statistics: true
-#            hibernate.globally_quoted_identifiers: true
-#        hibernate:
-#            ddl-auto: update
-#            naming-strategy: org.springframework.boot.orm.jpa.hibernate.SpringNamingStrategy
-            
-        
+            hibernate.cache.use_second_level_cache: false
+            hibernate.cache.use_query_cache: false
     messages:
-        basename: classpath:/i18n/messages
         cache-seconds: 1
-    mvc:
-        favicon:
-            enabled: false
     thymeleaf:
-        mode: XHTML
         cache: false
-        
-# Spring boot admin does not work with spring boot 1.3 if logfile endpoint is enabled
-# https://github.com/codecentric/spring-boot-admin/issues/117
-endpoints:
-    logfile:
-        enabled: false
-        
+
 # ===================================================================
 # Nutcase specific properties
 # ===================================================================
 
 nc:
-    mail:
-        from: noreply@nutcase.com
+    security:
+        rememberme:
+            # security key (this key should be unique for your application, and kept secret)
+            key: mySecretRememberMe
+
+---
+
+spring:
+    profiles: prod
+    devtools:
+        restart:
+            enabled: false
+        livereload:
+            enabled: false
+logging:
+    file: nutcase.log
+    
+nc:
     security:
         rememberme:
             # security key (this key should be unique for your application, and kept secret)

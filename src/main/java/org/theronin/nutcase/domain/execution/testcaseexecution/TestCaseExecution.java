@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import javax.persistence.*;
 import java.util.List;
 import org.theronin.nutcase.domain.base.BaseEntity;
-import org.theronin.nutcase.domain.execution.Execution;
 import org.theronin.nutcase.domain.execution.teststepexecution.TestStepExecution;
+import org.theronin.nutcase.domain.execution.teststepexecution.TestStepExecutionDTO;
 import org.theronin.nutcase.domain.testcase.TestCase;
 import org.theronin.nutcase.domain.teststep.TestStep;
 
@@ -16,11 +16,8 @@ public class TestCaseExecution extends BaseEntity {
     @ManyToOne
     private TestCase testCaseRef;
 
-    @ManyToOne
-    private Execution execution;
-
-    @OneToMany
-    private List<TestStepExecution> testStepExecutions;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<TestStepExecution> testStepExecutions = new ArrayList<>();
 
     private String description;
 
@@ -29,6 +26,21 @@ public class TestCaseExecution extends BaseEntity {
     private boolean automated;
 
     protected TestCaseExecution() {
+    }
+
+    public TestCaseExecution(TestCaseExecutionDTO dto, int mappingDept) {
+        super(dto);
+        if (dto != null) {
+            mappingDept--;
+            this.description = dto.getDescription();
+            this.weight = dto.getWeight();
+            this.automated = dto.isAutomated();
+            if (mappingDept > 0) {
+                for (TestStepExecutionDTO testStepExecution : dto.getTestStepExecutions()) {
+                    testStepExecutions.add(new TestStepExecution(testStepExecution, mappingDept));
+                }
+            }
+        }
     }
 
     public TestCaseExecution(TestCase testCase) {
@@ -40,14 +52,6 @@ public class TestCaseExecution extends BaseEntity {
         this.description = testCase.getDescription();
         this.weight = testCase.getWeight();
         this.automated = testCase.isAutomated();
-    }
-
-    public Execution getExecution() {
-        return execution;
-    }
-
-    public void setExecution(Execution execution) {
-        this.execution = execution;
     }
 
     public List<TestStepExecution> getTestStepExecutions() {

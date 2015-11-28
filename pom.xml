@@ -12,6 +12,7 @@
     </parent>
     
     <properties>
+        <profile>dev</profile>
         <java.version>1.8</java.version>
     </properties>
     
@@ -23,12 +24,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
-            <exclusions>
-                <exclusion>
-                    <artifactId>hibernate-entitymanager</artifactId>
-                    <groupId>org.hibernate</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -37,11 +32,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.persistence</groupId>
-            <artifactId>eclipselink</artifactId>
-            <version>2.6.1</version>
         </dependency>
         <dependency>
             <groupId>javax.inject</groupId>
@@ -88,6 +78,7 @@
     </repositories>
     
     <build>
+        <defaultGoal>spring-boot:run</defaultGoal>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -95,8 +86,8 @@
                 <version>2.18.1</version>
                 <configuration>
                     <testFailureIgnore>true</testFailureIgnore>
-                    <parallel>classes</parallel>
-                    <useUnlimitedThreads>true</useUnlimitedThreads>
+                    <!--<parallel>classes</parallel>-->
+                    <!--<useUnlimitedThreads>true</useUnlimitedThreads>-->
                 </configuration>
             </plugin>
             <plugin>
@@ -126,6 +117,41 @@
                 </configuration>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <!-- Filter app yamls -->
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/*.yml</include>
+                </includes>
+            </resource>
+            <!-- Don't filter everything else -->
+            <!-- Without this all other resources would be skipped -->
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <excludes>
+                    <exclude>**/*.yml</exclude>
+                </excludes>
+            </resource>
+        </resources>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/*.yml</include>
+                </includes>
+            </testResource>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>false</filtering>
+                <excludes>
+                    <exclude>**/*.yml</exclude>
+                </excludes>
+            </testResource>
+        </testResources>
     </build>
 	
     <profiles>
@@ -134,6 +160,10 @@
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
+            
+            <properties>
+                <profile>dev</profile>
+            </properties>
 
             <dependencies>
                 <dependency>
