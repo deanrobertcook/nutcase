@@ -17,9 +17,9 @@ import org.springframework.core.env.Environment;
 import org.theronin.nutcase.config.NCProperties;
 
 @Configuration
-public class PersistenceConfiguration {
+public class DataSourceConfiguration {
 
-    private final Logger log = LoggerFactory.getLogger(PersistenceConfiguration.class);
+    private final Logger log = LoggerFactory.getLogger(DataSourceConfiguration.class);
 
     @Inject
     private Environment env;

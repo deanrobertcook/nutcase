@@ -13,8 +13,9 @@ import org.theronin.nutcase.domain.testcase.TestCase;
 import org.theronin.nutcase.domain.testcase.TestCaseRepository;
 import org.theronin.nutcase.domain.teststep.TestStep;
 import org.theronin.nutcase.domain.teststep.TestStepRepository;
-import org.theronin.nutcase.domain.user.NutcaseUser;
-import org.theronin.nutcase.domain.user.NutcaseUserRepository;
+import org.theronin.nutcase.domain.user.entity.User;
+import org.theronin.nutcase.domain.user.repository.UserRepository;
+import org.theronin.nutcase.domain.user.service.UserService;
 
 @Service
 @Transactional
@@ -30,10 +31,14 @@ public class TestService {
 	RunRepository runRepository;
 
 	@Inject
-	ProjectRepository projectRepository;
+    ProjectRepository projectRepository;
 
-	@Inject
-	NutcaseUserRepository userRepository;
+    @Inject
+    UserRepository userRepository;
+
+    @Inject
+    UserService userService;
+
 
 	@Logged
 	@PostConstruct
@@ -42,14 +47,11 @@ public class TestService {
 		testStepRepository.deleteAllInBatch();
 		runRepository.deleteAllInBatch();
 		testCaseRepository.deleteAllInBatch();
-		projectRepository.deleteAllInBatch();
-		userRepository.deleteAllInBatch();
+        projectRepository.deleteAllInBatch();
 
-		NutcaseUser user1 = new NutcaseUser("test1@wire.com", "password");
-		NutcaseUser user2 = new NutcaseUser("test2@wire.com", "password");
+        User admin = userService.createUserInformation("admin", "admin", "admin", "admin", "mail@mail.de", "de");
+        userService.activateRegistration(admin.getActivationKey());
 
-		userRepository.save(user1);
-		userRepository.save(user2);
 
 		Project android = new Project("Android", "The Android project.");
 		android = projectRepository.save(android);
@@ -68,12 +70,12 @@ public class TestService {
 		testCaseRepository.save(testCase1);
 		testCaseRepository.save(testCase2);
 
-        addSomeTestSteps(testCase1, testCaseRepository, user1);
-        addSomeTestSteps(testCase2, testCaseRepository, user1);
+        addSomeTestSteps(testCase1, testCaseRepository);
+        addSomeTestSteps(testCase2, testCaseRepository);
 	}
 
 	@Logged
-    private void addSomeTestSteps(TestCase testCase, TestCaseRepository testCaseRepository, NutcaseUser user) {
+    private void addSomeTestSteps(TestCase testCase, TestCaseRepository testCaseRepository) {
         TestStep testStep1 = new TestStep("Do something to: " + testCase.getDescription());
         TestStep testStep2 = new TestStep("Do something to: " + testCase.getDescription());
         TestStep testStep3 = new TestStep("Do something to: " + testCase.getDescription());

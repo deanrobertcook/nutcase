@@ -1,11 +1,11 @@
 package org.theronin.nutcase.domain.execution.teststepexecution;
 
 import javax.persistence.*;
-import org.theronin.nutcase.domain.base.BaseEntity;
+import org.theronin.nutcase.domain.audit.AbstractAuditingEntity;
 import org.theronin.nutcase.domain.teststep.TestStep;
 
 @Entity
-public class TestStepExecution extends BaseEntity {
+public class TestStepExecution extends AbstractAuditingEntity {
 
     @Basic(optional = true)
     @ManyToOne
@@ -20,6 +20,12 @@ public class TestStepExecution extends BaseEntity {
         super(dto);
         if (dto != null) {
             mappingDept--;
+
+            this.setCreatedBy(dto.getCreatedBy());
+            this.setCreatedDate(dto.getCreatedDate());
+            this.setLastModifiedBy(dto.getLastModifiedBy());
+            this.setLastModifiedDate(dto.getLastModifiedDate());
+
             this.description = dto.getDescription();
         }
     }

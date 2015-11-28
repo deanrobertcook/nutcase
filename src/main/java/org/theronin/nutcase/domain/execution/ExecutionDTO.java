@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import org.theronin.nutcase.domain.base.BaseDTO;
+import org.theronin.nutcase.domain.base.AuditBaseDTO;
 import org.theronin.nutcase.domain.execution.testcaseexecution.TestCaseExecution;
 import org.theronin.nutcase.domain.execution.testcaseexecution.TestCaseExecutionDTO;
 
-public class ExecutionDTO extends BaseDTO {
+public class ExecutionDTO extends AuditBaseDTO {
 
     @NotNull
     @Size(min = 1, max = 255)
@@ -25,6 +25,12 @@ public class ExecutionDTO extends BaseDTO {
         super(entity);
         if (entity != null) {
             mappingDept--;
+
+            this.setCreatedBy(entity.getCreatedBy());
+            this.setCreatedDate(entity.getCreatedDate());
+            this.setLastModifiedBy(entity.getLastModifiedBy());
+            this.setLastModifiedDate(entity.getLastModifiedDate());
+
             this.name = entity.getName();
             this.description = entity.getDescription();
             if (mappingDept > 0) {

@@ -3,6 +3,7 @@ package org.theronin.nutcase.domain.run;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
+import javax.validation.ConstraintViolationException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -14,7 +15,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.theronin.nutcase.Application;
-import org.theronin.nutcase.domain.base.ConstraintViolationBagException;
 import org.theronin.nutcase.domain.execution.ExecutionDTO;
 import org.theronin.nutcase.domain.execution.ExecutionRepository;
 import org.theronin.nutcase.domain.project.ProjectRepository;
@@ -73,7 +73,7 @@ public class RunServiceTest {
         runService.create(run);
     }
 
-    @Test(expected = ConstraintViolationBagException.class)
+    @Test(expected = ConstraintViolationException.class)
     public void shouldNotCreateInvalidRun() {
         log.info(name.getMethodName());
         RunDTO run = new RunDTO();

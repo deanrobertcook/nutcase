@@ -1,9 +1,9 @@
 package org.theronin.nutcase.domain.execution.teststepexecution;
 
-import org.theronin.nutcase.domain.base.BaseDTO;
+import org.theronin.nutcase.domain.base.AuditBaseDTO;
 import org.theronin.nutcase.domain.teststep.TestStepDTO;
 
-public class TestStepExecutionDTO extends BaseDTO {
+public class TestStepExecutionDTO extends AuditBaseDTO {
 
     private TestStepDTO testStepRef;
 
@@ -19,6 +19,12 @@ public class TestStepExecutionDTO extends BaseDTO {
         super(entity);
         if (entity != null) {
             mappingDept--;
+
+            this.setCreatedBy(entity.getCreatedBy());
+            this.setCreatedDate(entity.getCreatedDate());
+            this.setLastModifiedBy(entity.getLastModifiedBy());
+            this.setLastModifiedDate(entity.getLastModifiedDate());
+
             this.description = entity.getDescription();
         }
     }

@@ -1,6 +1,7 @@
 package org.theronin.nutcase.domain.execution.teststepexecution;
 
 import javax.inject.Inject;
+import javax.validation.ConstraintViolationException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -13,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.theronin.nutcase.Application;
-import org.theronin.nutcase.domain.base.ConstraintViolationBagException;
 import org.theronin.nutcase.domain.execution.ExecutionRepository;
 import org.theronin.nutcase.domain.project.ProjectRepository;
 import org.theronin.nutcase.domain.testcase.TestCaseRepository;
@@ -67,7 +67,7 @@ public class TestStepExecutionServiceTest {
     }
 
     @Ignore // nothing to validate yet
-    @Test(expected = ConstraintViolationBagException.class)
+    @Test(expected = ConstraintViolationException.class)
     public void shouldNotCreateInvalidTestStepExecution() {
         log.info(name.getMethodName());
         TestStepExecutionDTO testStepExecution = new TestStepExecutionDTO();

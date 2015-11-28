@@ -3,11 +3,11 @@ package org.theronin.nutcase.domain.testcase;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.NotNull;
-import org.theronin.nutcase.domain.base.BaseDTO;
+import org.theronin.nutcase.domain.base.AuditBaseDTO;
 import org.theronin.nutcase.domain.teststep.TestStep;
 import org.theronin.nutcase.domain.teststep.TestStepDTO;
 
-public class TestCaseDTO extends BaseDTO {
+public class TestCaseDTO extends AuditBaseDTO {
 
     @NotNull
     private Long testId;
@@ -27,6 +27,12 @@ public class TestCaseDTO extends BaseDTO {
         super(entity);
         if (entity != null) {
             mappingDept--;
+
+            this.setCreatedBy(entity.getCreatedBy());
+            this.setCreatedDate(entity.getCreatedDate());
+            this.setLastModifiedBy(entity.getLastModifiedBy());
+            this.setLastModifiedDate(entity.getLastModifiedDate());
+
             this.testId = entity.getTestId();
             this.description = entity.getDescription();
             this.weight = entity.getWeight();
