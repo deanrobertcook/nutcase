@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import org.theronin.nutcase.domain.base.BaseDTO;
+import org.theronin.nutcase.domain.base.AuditBaseDTO;
 import org.theronin.nutcase.domain.run.Run;
 import org.theronin.nutcase.domain.run.RunDTO;
 import org.theronin.nutcase.domain.testcase.TestCase;
 import org.theronin.nutcase.domain.testcase.TestCaseDTO;
 
-public class ProjectDTO extends BaseDTO {
+public class ProjectDTO extends AuditBaseDTO {
 
     @NotNull
     @Size(min = 1, max = 255)
@@ -29,6 +29,12 @@ public class ProjectDTO extends BaseDTO {
         super(entity);
         if (entity != null) {
             mappingDept--;
+
+            this.setCreatedBy(entity.getCreatedBy());
+            this.setCreatedDate(entity.getCreatedDate());
+            this.setLastModifiedBy(entity.getLastModifiedBy());
+            this.setLastModifiedDate(entity.getLastModifiedDate());
+
             this.name = entity.getName();
             this.description = entity.getDescription();
             if (mappingDept > 0) {
@@ -76,7 +82,7 @@ public class ProjectDTO extends BaseDTO {
 
     @Override
     public String toString() {
-        return "ProjectDTO{" + "name=" + name + ", runs=" + runs + ", testcases=" + testcases + ", description=" + description + '}';
+        return "ProjectDTO{" + "name=" + name + ", runs=" + runs + ", testcases=" + testcases + ", description=" + description + ", Audit=" + super.toString() + '}';
     }
 
 

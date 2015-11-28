@@ -2,12 +2,12 @@ package org.theronin.nutcase.domain.execution.testcaseexecution;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.theronin.nutcase.domain.base.BaseDTO;
+import org.theronin.nutcase.domain.base.AuditBaseDTO;
 import org.theronin.nutcase.domain.execution.teststepexecution.TestStepExecution;
 import org.theronin.nutcase.domain.execution.teststepexecution.TestStepExecutionDTO;
 import org.theronin.nutcase.domain.testcase.TestCaseDTO;
 
-public class TestCaseExecutionDTO extends BaseDTO {
+public class TestCaseExecutionDTO extends AuditBaseDTO {
 
     private TestCaseDTO testCaseRef;
 
@@ -26,6 +26,12 @@ public class TestCaseExecutionDTO extends BaseDTO {
         super(entity);
         if (entity != null) {
             mappingDept--;
+
+            this.setCreatedBy(entity.getCreatedBy());
+            this.setCreatedDate(entity.getCreatedDate());
+            this.setLastModifiedBy(entity.getLastModifiedBy());
+            this.setLastModifiedDate(entity.getLastModifiedDate());
+
             this.description = entity.getDescription();
             this.weight = entity.getWeight();
             this.automated = entity.isAutomated();

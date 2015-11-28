@@ -1,8 +1,10 @@
 package org.theronin.nutcase.domain.teststep;
 
 import javax.inject.Inject;
+import javax.validation.ConstraintViolationException;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
@@ -50,6 +52,14 @@ public class TestStepServiceTest {
         log.info(name.getMethodName());
         TestStepDTO testStep = new TestStepDTO();
         testStep.setId(Long.MAX_VALUE);
+        testStepService.create(testStep);
+    }
+
+    @Ignore // nothing to validate yet
+    @Test(expected = ConstraintViolationException.class)
+    public void shouldNotCreateInvalidTestStep() {
+        log.info(name.getMethodName());
+        TestStepDTO testStep = new TestStepDTO();
         testStepService.create(testStep);
     }
 

@@ -3,6 +3,7 @@ package org.theronin.nutcase.domain.testcase;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
+import javax.validation.ConstraintViolationException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -57,6 +58,13 @@ public class TestCaseServiceTest {
         log.info(name.getMethodName());
         TestCaseDTO testcase = new TestCaseDTO();
         testcase.setId(Long.MAX_VALUE);
+        testCaseService.create(testcase);
+    }
+
+    @Test(expected = ConstraintViolationException.class)
+    public void shouldNotCreateInvalidTestCase() {
+        log.info(name.getMethodName());
+        TestCaseDTO testcase = new TestCaseDTO();
         testCaseService.create(testcase);
     }
 

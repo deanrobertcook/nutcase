@@ -9,11 +9,11 @@ import org.springframework.context.annotation.*;
 import org.springframework.cache.support.NoOpCacheManager;
 
 import javax.annotation.PreDestroy;
-import org.theronin.nutcase.config.persistence.PersistenceConfiguration;
+import org.theronin.nutcase.config.persistence.DataSourceConfiguration;
 
 @Configuration
 @EnableCaching
-@AutoConfigureAfter(value = {PersistenceConfiguration.class})
+@AutoConfigureAfter(value = {DataSourceConfiguration.class})
 public class CacheConfiguration {
 
 		private final Logger log = LoggerFactory.getLogger(CacheConfiguration.class);

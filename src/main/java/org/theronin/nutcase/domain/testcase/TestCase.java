@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import javax.persistence.*;
 import java.util.List;
 import javax.validation.constraints.NotNull;
-import org.theronin.nutcase.domain.base.BaseEntity;
+import org.theronin.nutcase.domain.audit.AbstractAuditingEntity;
 import org.theronin.nutcase.domain.teststep.TestStep;
 import org.theronin.nutcase.domain.teststep.TestStepDTO;
 
@@ -12,7 +12,7 @@ import org.theronin.nutcase.domain.teststep.TestStepDTO;
 @Table(indexes = {
     @Index(name = "TEST_ID_INDEX", columnList = "TESTID", unique = true)
 })
-public class TestCase extends BaseEntity {
+public class TestCase extends AbstractAuditingEntity {
 
     @NotNull
     @Column(unique = true)
@@ -34,6 +34,12 @@ public class TestCase extends BaseEntity {
         super(dto);
         if (dto != null) {
             mappingDept--;
+
+            this.setCreatedBy(dto.getCreatedBy());
+            this.setCreatedDate(dto.getCreatedDate());
+            this.setLastModifiedBy(dto.getLastModifiedBy());
+            this.setLastModifiedDate(dto.getLastModifiedDate());
+
             this.testId = dto.getTestId();
             this.description = dto.getDescription();
             this.weight = dto.getWeight();

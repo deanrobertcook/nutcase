@@ -5,14 +5,14 @@ import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import org.theronin.nutcase.domain.base.BaseEntity;
+import org.theronin.nutcase.domain.audit.AbstractAuditingEntity;
 import org.theronin.nutcase.domain.run.Run;
 import org.theronin.nutcase.domain.run.RunDTO;
 import org.theronin.nutcase.domain.testcase.TestCase;
 import org.theronin.nutcase.domain.testcase.TestCaseDTO;
 
 @Entity
-public class Project extends BaseEntity {
+public class Project extends AbstractAuditingEntity {
 
     @NotNull
     @Size(min = 1, max = 255)
@@ -35,6 +35,12 @@ public class Project extends BaseEntity {
         super(dto);
         if (dto != null) {
             mappingDept--;
+
+            this.setCreatedBy(dto.getCreatedBy());
+            this.setCreatedDate(dto.getCreatedDate());
+            this.setLastModifiedBy(dto.getLastModifiedBy());
+            this.setLastModifiedDate(dto.getLastModifiedDate());
+
             this.name = dto.getName();
             this.description = dto.getDescription();
             if (mappingDept > 0) {
@@ -87,8 +93,7 @@ public class Project extends BaseEntity {
 
     @Override
     public String toString() {
-        return "Project{" + "name=" + name + ", runs=" + runs + ", testcases=" + testcases + ", description=" + description + '}';
+        return "Project{" + "name=" + name + ", runs=" + runs + ", testcases=" + testcases + ", description=" + description + ", Audit=" + super.toString() + '}';
     }
-
 
 }

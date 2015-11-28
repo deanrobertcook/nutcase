@@ -5,7 +5,7 @@ import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import org.theronin.nutcase.domain.base.BaseEntity;
+import org.theronin.nutcase.domain.audit.AbstractAuditingEntity;
 import org.theronin.nutcase.domain.execution.testcaseexecution.TestCaseExecution;
 import org.theronin.nutcase.domain.execution.testcaseexecution.TestCaseExecutionDTO;
 
@@ -13,7 +13,7 @@ import org.theronin.nutcase.domain.execution.testcaseexecution.TestCaseExecution
 @Table(indexes = {
     @Index(name = "EXECUTION_NAME_INDEX", columnList = "NAME")
 })
-public class Execution extends BaseEntity {
+public class Execution extends AbstractAuditingEntity {
 
     @NotNull
     @Size(min = 1, max = 255)
@@ -33,6 +33,12 @@ public class Execution extends BaseEntity {
         super(dto);
         if (dto != null) {
             mappingDept--;
+
+            this.setCreatedBy(dto.getCreatedBy());
+            this.setCreatedDate(dto.getCreatedDate());
+            this.setLastModifiedBy(dto.getLastModifiedBy());
+            this.setLastModifiedDate(dto.getLastModifiedDate());
+
             this.name = dto.getName();
             this.description = dto.getDescription();
             if (mappingDept > 0) {

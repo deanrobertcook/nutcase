@@ -1,8 +1,8 @@
 package org.theronin.nutcase.domain.teststep;
 
-import org.theronin.nutcase.domain.base.BaseDTO;
+import org.theronin.nutcase.domain.base.AuditBaseDTO;
 
-public class TestStepDTO extends BaseDTO {
+public class TestStepDTO extends AuditBaseDTO {
 
     private String description;
 
@@ -13,6 +13,12 @@ public class TestStepDTO extends BaseDTO {
         super(entity);
         if (entity != null) {
             mappingDept--;
+
+            this.setCreatedBy(entity.getCreatedBy());
+            this.setCreatedDate(entity.getCreatedDate());
+            this.setLastModifiedBy(entity.getLastModifiedBy());
+            this.setLastModifiedDate(entity.getLastModifiedDate());
+
             this.description = entity.getDescription();
         }
     }

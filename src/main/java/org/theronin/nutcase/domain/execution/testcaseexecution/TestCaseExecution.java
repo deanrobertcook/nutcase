@@ -3,14 +3,13 @@ package org.theronin.nutcase.domain.execution.testcaseexecution;
 import java.util.ArrayList;
 import javax.persistence.*;
 import java.util.List;
-import org.theronin.nutcase.domain.base.BaseEntity;
+import org.theronin.nutcase.domain.audit.AbstractAuditingEntity;
 import org.theronin.nutcase.domain.execution.teststepexecution.TestStepExecution;
 import org.theronin.nutcase.domain.execution.teststepexecution.TestStepExecutionDTO;
 import org.theronin.nutcase.domain.testcase.TestCase;
-import org.theronin.nutcase.domain.teststep.TestStep;
 
 @Entity
-public class TestCaseExecution extends BaseEntity {
+public class TestCaseExecution extends AbstractAuditingEntity {
 
     @Basic(optional = true)
     @ManyToOne
@@ -32,6 +31,12 @@ public class TestCaseExecution extends BaseEntity {
         super(dto);
         if (dto != null) {
             mappingDept--;
+
+            this.setCreatedBy(dto.getCreatedBy());
+            this.setCreatedDate(dto.getCreatedDate());
+            this.setLastModifiedBy(dto.getLastModifiedBy());
+            this.setLastModifiedDate(dto.getLastModifiedDate());
+
             this.description = dto.getDescription();
             this.weight = dto.getWeight();
             this.automated = dto.isAutomated();
@@ -41,17 +46,6 @@ public class TestCaseExecution extends BaseEntity {
                 }
             }
         }
-    }
-
-    public TestCaseExecution(TestCase testCase) {
-        this.testCaseRef = testCase;
-        testStepExecutions = new ArrayList();
-        for (TestStep teststep : testCase.getTeststeps()) {
-            testStepExecutions.add(new TestStepExecution(teststep));
-        }
-        this.description = testCase.getDescription();
-        this.weight = testCase.getWeight();
-        this.automated = testCase.isAutomated();
     }
 
     public List<TestStepExecution> getTestStepExecutions() {
