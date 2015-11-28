@@ -52,12 +52,14 @@ public class TestCaseService {
 
     @Logged
     public TestCaseDTO read(Long id) {
+        notNull(id, new IllegalArgumentException("ID is null"));
         TestCase entity = getDefaultRepo().findOne(id);
         return entity == null ? null : new TestCaseDTO(entity, 1);
     }
 
     @Logged
     public TestCaseDTO readWithSteps(Long id) {
+        notNull(id, new IllegalArgumentException("ID is null"));
         TestCase entity = getDefaultRepo().findOne(id);
         return entity == null ? null : new TestCaseDTO(entity, 2);
     }

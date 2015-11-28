@@ -51,12 +51,14 @@ public class ProjectService {
 
     @Logged
     public ProjectDTO read(Long id) {
+        notNull(id, new IllegalArgumentException("ID is null"));
         Project entity = getDefaultRepo().findOne(id);
         return entity == null ? null : new ProjectDTO(entity, 1);
     }
 
     @Logged
     public ProjectDTO readWithRunsAndTestcases(Long id) {
+        notNull(id, new IllegalArgumentException("ID is null"));
         Project entity = getDefaultRepo().findOne(id);
         return entity == null ? null : new ProjectDTO(entity, 2);
     }
