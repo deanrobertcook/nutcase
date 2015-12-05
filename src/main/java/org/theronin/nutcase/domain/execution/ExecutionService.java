@@ -53,18 +53,21 @@ public class ExecutionService {
     }
 
     @Logged
+    @Transactional(readOnly = true)
     public ExecutionDTO read(long id) {
         Execution entity = getDefaultRepo().findOne(id);
         return entity == null ? null : new ExecutionDTO(entity, FLAT);
     }
 
     @Logged
+    @Transactional(readOnly = true)
     public ExecutionDTO readWithTestCaseExecutions(long id) {
         Execution entity = getDefaultRepo().findOne(id);
         return entity == null ? null : new ExecutionDTO(entity, FULL);
     }
 
     @Logged
+    @Transactional(readOnly = true)
     public Page<ExecutionDTO> readAll(Pageable pageable) {
         notNull(pageable, new IllegalArgumentException("Pageable is null"));
         Page<Execution> page = getDefaultRepo().findAll(pageable);

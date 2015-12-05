@@ -55,7 +55,6 @@ public class ProjectServiceTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void shouldNotCreateNullProject() {
-
         log.info(name.getMethodName());
         projectService.create(null);
     }

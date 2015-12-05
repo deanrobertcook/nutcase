@@ -53,18 +53,21 @@ public class RunService {
     }
 
     @Logged
+    @Transactional(readOnly = true)
     public RunDTO read(long id) {
         Run entity = getDefaultRepo().findOne(id);
         return entity == null ? null : new RunDTO(entity, FLAT);
     }
 
     @Logged
+    @Transactional(readOnly = true)
     public RunDTO readWithTestcasesAndExecutions(long id) {
         Run entity = getDefaultRepo().findOne(id);
         return entity == null ? null : new RunDTO(entity, FULL);
     }
 
     @Logged
+    @Transactional(readOnly = true)
     public Page<RunDTO> readAll(Pageable pageable) {
         notNull(pageable, new IllegalArgumentException("Pageable is null"));
         Page<Run> page = getDefaultRepo().findAll(pageable);
