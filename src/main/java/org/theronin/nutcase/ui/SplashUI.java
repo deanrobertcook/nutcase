@@ -3,11 +3,14 @@ package org.theronin.nutcase.ui;
 import com.vaadin.annotations.Theme;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.VaadinRequest;
+import com.vaadin.server.VaadinService;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.*;
 import org.theronin.nutcase.ui.components.SignInForm;
 
 import java.io.File;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -16,12 +19,16 @@ import java.io.File;
 @Theme(SplashUI.THEME)
 public class SplashUI extends UI {
 
+    private final Logger log = LoggerFactory.getLogger(SplashUI.class);
+
     public static final String ROOT = "/nutcase";
     public static final String THEME = "valo";
+    public static final String BASEPATH = VaadinService.getCurrent()
+            .getBaseDirectory().getAbsolutePath();
+    public static final String IMAGES_ROOT = BASEPATH + "/WEB-INF/classes/images";
 
-    public static final String IMAGES_ROOT = "src/main/resources/images/";
 
-    private Image welcomeLogo = new Image(null, new FileResource(new File(IMAGES_ROOT + "logo-large.png")));
+    private Image welcomeLogo = new Image(null, new FileResource(new File(IMAGES_ROOT + "/logo-large.png")));
     private SignInForm signInLayout = new SignInForm();
 
     @Override
