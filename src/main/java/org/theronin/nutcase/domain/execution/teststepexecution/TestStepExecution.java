@@ -2,6 +2,7 @@ package org.theronin.nutcase.domain.execution.teststepexecution;
 
 import javax.persistence.*;
 import org.theronin.nutcase.domain.audit.AbstractAuditingEntity;
+import org.theronin.nutcase.domain.base.MapDept;
 import org.theronin.nutcase.domain.teststep.TestStep;
 
 @Entity
@@ -16,10 +17,10 @@ public class TestStepExecution extends AbstractAuditingEntity {
     protected TestStepExecution() {
     }
 
-    public TestStepExecution(TestStepExecutionDTO dto, int mappingDept) {
+    public TestStepExecution(TestStepExecutionDTO dto, MapDept mappingDept) {
         super(dto);
         if (dto != null) {
-            mappingDept--;
+            mappingDept = MapDept.getEnum(mappingDept.getValue() - 1);
 
             this.setCreatedBy(dto.getCreatedBy());
             this.setCreatedDate(dto.getCreatedDate());

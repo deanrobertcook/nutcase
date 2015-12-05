@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.theronin.nutcase.domain.audit.AbstractAuditingEntity;
+import org.theronin.nutcase.domain.base.MapDept;
 import org.theronin.nutcase.domain.run.Run;
 import org.theronin.nutcase.domain.run.RunDTO;
 import org.theronin.nutcase.domain.testcase.TestCase;
@@ -31,10 +32,10 @@ public class Project extends AbstractAuditingEntity {
     protected Project() {
     }
 
-    public Project(ProjectDTO dto, int mappingDept) {
+    public Project(ProjectDTO dto, MapDept mappingDept) {
         super(dto);
         if (dto != null) {
-            mappingDept--;
+            mappingDept = MapDept.getEnum(mappingDept.getValue() - 1);
 
             this.setCreatedBy(dto.getCreatedBy());
             this.setCreatedDate(dto.getCreatedDate());
@@ -43,7 +44,7 @@ public class Project extends AbstractAuditingEntity {
 
             this.name = dto.getName();
             this.description = dto.getDescription();
-            if (mappingDept > 0) {
+            if (mappingDept.getValue() > 0) {
                 for (RunDTO run : dto.getRuns()) {
                     runs.add(new Run(run, mappingDept));
                 }

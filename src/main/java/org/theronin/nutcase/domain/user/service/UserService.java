@@ -24,14 +24,17 @@ public class UserService {
 
 	private final Logger log = LoggerFactory.getLogger(UserService.class);
 
-	@Inject
-	private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final AuthorityRepository authorityRepository;
 
-	@Inject
-	private UserRepository userRepository;
+    @Inject
+    public UserService(PasswordEncoder passwordEncoder, UserRepository userRepository, AuthorityRepository authorityRepository) {
+        this.passwordEncoder = passwordEncoder;
+        this.userRepository = userRepository;
+        this.authorityRepository = authorityRepository;
+    }
 
-	@Inject
-	private AuthorityRepository authorityRepository;
 
 	@PostConstruct
 	private void createAuthorities() {

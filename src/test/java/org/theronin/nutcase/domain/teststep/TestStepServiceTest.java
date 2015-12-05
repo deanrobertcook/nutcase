@@ -26,13 +26,13 @@ public class TestStepServiceTest {
     public TestName name = new TestName();
 
     @Inject
-    TestStepService testStepService;
+    private TestStepService testStepService;
 
     @Inject
-    TestStepRepository testStepRepository;
+    private TestStepRepository testStepRepository;
 
     @Inject
-    TestCaseRepository testCaseRepository;
+    private TestCaseRepository testCaseRepository;
 
     @Before
     public void initTest() {

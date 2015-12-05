@@ -21,7 +21,6 @@ import org.theronin.nutcase.domain.teststep.TestStepRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
-//@Transactional
 public class TestCaseServiceTest {
 
     private static final Logger log = LoggerFactory.getLogger(TestCaseServiceTest.class);
@@ -30,16 +29,16 @@ public class TestCaseServiceTest {
     public TestName name = new TestName();
 
     @Inject
-    TestCaseService testCaseService;
+    private TestCaseService testCaseService;
 
     @Inject
-    ProjectService projectService;
+    private ProjectService projectService;
 
     @Inject
-    TestCaseRepository testCaseRepository;
+    private TestCaseRepository testCaseRepository;
 
     @Inject
-    TestStepRepository testStepRepository;
+    private TestStepRepository testStepRepository;
 
     @Before
     public void initTest() {

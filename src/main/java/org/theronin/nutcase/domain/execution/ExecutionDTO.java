@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.theronin.nutcase.domain.base.AuditBaseDTO;
+import org.theronin.nutcase.domain.base.MapDept;
 import org.theronin.nutcase.domain.execution.testcaseexecution.TestCaseExecution;
 import org.theronin.nutcase.domain.execution.testcaseexecution.TestCaseExecutionDTO;
 
@@ -21,10 +22,10 @@ public class ExecutionDTO extends AuditBaseDTO {
     public ExecutionDTO() {
     }
 
-    public ExecutionDTO(Execution entity, int mappingDept) {
+    public ExecutionDTO(Execution entity, MapDept mappingDept) {
         super(entity);
         if (entity != null) {
-            mappingDept--;
+            mappingDept = MapDept.getEnum(mappingDept.getValue() - 1);
 
             this.setCreatedBy(entity.getCreatedBy());
             this.setCreatedDate(entity.getCreatedDate());
@@ -33,7 +34,7 @@ public class ExecutionDTO extends AuditBaseDTO {
 
             this.name = entity.getName();
             this.description = entity.getDescription();
-            if (mappingDept > 0) {
+            if (mappingDept.getValue() > 0) {
                 for (TestCaseExecution testcase : entity.getTestCaseExecutions()) {
                     testCaseExecutions.add(new TestCaseExecutionDTO(testcase, mappingDept));
                 }
