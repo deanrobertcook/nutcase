@@ -53,18 +53,21 @@ public class ProjectService {
     }
 
     @Logged
+    @Transactional(readOnly = true)
     public ProjectDTO read(long id) {
         Project entity = getDefaultRepo().findOne(id);
         return entity == null ? null : new ProjectDTO(entity, FLAT);
     }
 
     @Logged
+    @Transactional(readOnly = true)
     public ProjectDTO readWithRunsAndTestcases(long id) {
         Project entity = getDefaultRepo().findOne(id);
         return entity == null ? null : new ProjectDTO(entity, FULL);
     }
     
     @Logged
+    @Transactional(readOnly = true)
     public Page<ProjectDTO> readAll(Pageable pageable) {
         notNull(pageable, new IllegalArgumentException("Pageable is null"));
         Page<Project> page = getDefaultRepo().findAll(pageable);

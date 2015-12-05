@@ -41,7 +41,7 @@ public class MethodLoggerInterceptor {
      */
     @Around("onlyLoggedAnnotatedTypes()")
     public Object intercept(final ProceedingJoinPoint pjp) throws Throwable {
-        Method method = ((MethodSignature) pjp.getSignature()).getMethod();
+        final Method method = ((MethodSignature) pjp.getSignature()).getMethod();
 
         Logger LOG = LoggerFactory.getLogger(method.getDeclaringClass().getName());
         StringBuilder log = new StringBuilder("---------------------------------------------------------\n");
@@ -50,20 +50,25 @@ public class MethodLoggerInterceptor {
         log.append(" -    Method: ").append(method.getName()).append("\n");
 
         if (method.getParameterTypes() != null) {
-
-            Annotation[][] annos = method.getParameterAnnotations();
+            final Logged loggedAnnotation = method.getAnnotation(Logged.class);
+            final Annotation[][] annos = method.getParameterAnnotations();
             Class<?>[] params = method.getParameterTypes();
             for (int i = 0; i < annos.length; i++) {
 
                 for (int j = 0; j < annos[i].length; j++) {
-                    Annotation annotation = annos[i][j];
+                    final Annotation annotation = annos[i][j];
                     log.append(" -       Annotation for Param ").append(i + 1).append(": @").append(annotation.annotationType().getSimpleName()).append("\n");
                 }
 
+                Object value = "<suppressed>";
+                if (loggedAnnotation.printParameterValues()) {
+                    value = pjp.getArgs()[i];
+                }
                 if (params[i] != null) {
-                    log.append(" -       Param ").append(i + 1).append(": (").append(params[i].getSimpleName()).append(") ").append(pjp.getArgs()[i]).append("\n");
+                    final String className = params[i].getSimpleName();
+                    log.append(" -       Param ").append(i + 1).append(": (").append(className).append(") ").append(value).append("\n");
                 } else {
-                    log.append(" -       Param ").append(i + 1).append(": () ").append(pjp.getArgs()[i]).append("\n");
+                    log.append(" -       Param ").append(i + 1).append(": () ").append(value).append("\n");
                 }
             }
         }

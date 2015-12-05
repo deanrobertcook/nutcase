@@ -53,18 +53,21 @@ public class TestCaseExecutionService {
     }
 
     @Logged
+    @Transactional(readOnly = true)
     public TestCaseExecutionDTO read(long id) {
         TestCaseExecution entity = getDefaultRepo().findOne(id);
         return entity == null ? null : new TestCaseExecutionDTO(entity, FLAT);
     }
 
     @Logged
+    @Transactional(readOnly = true)
     public TestCaseExecutionDTO readWithTestStepExecutions(long id) {
         TestCaseExecution entity = getDefaultRepo().findOne(id);
         return entity == null ? null : new TestCaseExecutionDTO(entity, FULL);
     }
 
     @Logged
+    @Transactional(readOnly = true)
     public Page<TestCaseExecutionDTO> readAll(Pageable pageable) {
         notNull(pageable, new IllegalArgumentException("Pageable is null"));
         Page<TestCaseExecution> page = getDefaultRepo().findAll(pageable);

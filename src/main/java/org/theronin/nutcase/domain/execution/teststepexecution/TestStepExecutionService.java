@@ -52,12 +52,14 @@ public class TestStepExecutionService {
     }
 
     @Logged
+    @Transactional(readOnly = true)
     public TestStepExecutionDTO read(long id) {
         TestStepExecution entity = getDefaultRepo().findOne(id);
         return entity == null ? null : new TestStepExecutionDTO(entity, FLAT);
     }
 
     @Logged
+    @Transactional(readOnly = true)
     public Page<TestStepExecutionDTO> readAll(Pageable pageable) {
         notNull(pageable, new IllegalArgumentException("Pageable is null"));
         Page<TestStepExecution> page = getDefaultRepo().findAll(pageable);

@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.inject.Inject;
 import java.util.*;
 import javax.annotation.PostConstruct;
+import org.theronin.nutcase.config.logging.Logged;
 import org.theronin.nutcase.domain.user.entity.Authority;
 import org.theronin.nutcase.domain.user.entity.User;
 import org.theronin.nutcase.domain.user.repository.AuthorityRepository;
@@ -35,7 +36,7 @@ public class UserService {
         this.authorityRepository = authorityRepository;
     }
 
-
+    @Logged
 	@PostConstruct
 	private void createAuthorities() {
 		if (null == authorityRepository.findOne("ROLE_USER")) {
@@ -52,6 +53,7 @@ public class UserService {
 		}
 	}
 
+    @Logged
 	public Optional<User> activateRegistration(String key) {
 		log.debug("Activating user for activation key {}", key);
 		userRepository.findOneByActivationKey(key)
@@ -66,6 +68,7 @@ public class UserService {
 		return Optional.empty();
 	}
 
+    @Logged(printParameterValues = false)
 	public Optional<User> completePasswordReset(String newPassword, String key) {
 		log.debug("Reset user password for reset key {}", key);
 
@@ -83,6 +86,7 @@ public class UserService {
 			});
 	}
 
+    @Logged
 	public Optional<User> requestPasswordReset(String mail) {
 		return userRepository.findOneByEmail(mail)
 			.filter(user -> user.getActivated())
@@ -94,6 +98,7 @@ public class UserService {
 			});
 	}
 
+    @Logged(printParameterValues = false)
 	public User createUserInformation(String login, String password, String firstName, String lastName, String email,
 		String langKey) {
 
@@ -119,6 +124,7 @@ public class UserService {
 		return newUser;
 	}
 
+    @Logged
 	public void updateUserInformation(String firstName, String lastName, String email, String langKey) {
 		userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).ifPresent(u -> {
 			u.setFirstName(firstName);
@@ -130,6 +136,7 @@ public class UserService {
 		});
 	}
 
+    @Logged(printParameterValues = false)
 	public void changePassword(String password) {
 		userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).ifPresent(u -> {
 			String encryptedPassword = passwordEncoder.encode(password);
@@ -139,6 +146,7 @@ public class UserService {
 		});
 	}
 
+    @Logged
 	@Transactional(readOnly = true)
 	public Optional<User> getUserWithAuthoritiesByLogin(String login) {
 		return userRepository.findOneByLogin(login).map(u -> {
@@ -147,6 +155,7 @@ public class UserService {
 		});
 	}
 
+    @Logged
 	@Transactional(readOnly = true)
 	public User getUserWithAuthorities(Long id) {
 		User user = userRepository.findOne(id);
@@ -154,6 +163,7 @@ public class UserService {
 		return user;
 	}
 
+    @Logged
 	@Transactional(readOnly = true)
 	public User getUserWithAuthorities() {
 		User user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).get();
@@ -168,6 +178,7 @@ public class UserService {
 	 * This is scheduled to get fired everyday, at 01:00 (am).
 	 * </p>
 	 */
+    @Logged
 	@Scheduled(cron = "0 0 1 * * ?")
 	public void removeNotActivatedUsers() {
 		ZonedDateTime now = ZonedDateTime.now();
