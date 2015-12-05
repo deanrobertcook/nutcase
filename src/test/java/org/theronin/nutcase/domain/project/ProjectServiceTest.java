@@ -34,16 +34,16 @@ public class ProjectServiceTest {
     ProjectService projectService;
 
     @Inject
-    ProjectRepository projectRepository;
+    private ProjectRepository projectRepository;
 
     @Inject
-    RunRepository runRepository;
+    private RunRepository runRepository;
 
     @Inject
-    TestCaseRepository testCaseRepository;
+    private TestCaseRepository testCaseRepository;
 
     @Inject
-    TestStepRepository testStepRepository;
+    private TestStepRepository testStepRepository;
 
     @Before
     public void initTest() {

@@ -1,6 +1,7 @@
 package org.theronin.nutcase.domain.execution.teststepexecution;
 
 import org.theronin.nutcase.domain.base.AuditBaseDTO;
+import org.theronin.nutcase.domain.base.MapDept;
 import org.theronin.nutcase.domain.teststep.TestStepDTO;
 
 public class TestStepExecutionDTO extends AuditBaseDTO {
@@ -15,10 +16,10 @@ public class TestStepExecutionDTO extends AuditBaseDTO {
     }
 
 
-    public TestStepExecutionDTO(TestStepExecution entity, int mappingDept) {
+    public TestStepExecutionDTO(TestStepExecution entity, MapDept mappingDept) {
         super(entity);
         if (entity != null) {
-            mappingDept--;
+            mappingDept = MapDept.getEnum(mappingDept.getValue() - 1);
 
             this.setCreatedBy(entity.getCreatedBy());
             this.setCreatedDate(entity.getCreatedDate());

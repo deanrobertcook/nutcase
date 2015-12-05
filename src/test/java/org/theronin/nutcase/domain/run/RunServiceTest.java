@@ -32,22 +32,22 @@ public class RunServiceTest {
     public TestName name = new TestName();
 
     @Inject
-    RunService runService;
+    private RunService runService;
 
     @Inject
-    RunRepository runRepository;
+    private RunRepository runRepository;
 
     @Inject
-    ProjectRepository projectRepository;
+    private ProjectRepository projectRepository;
 
     @Inject
-    TestCaseRepository testCaseRepository;
+    private TestCaseRepository testCaseRepository;
 
     @Inject
-    TestStepRepository testStepRepository;
+    private TestStepRepository testStepRepository;
 
     @Inject
-    ExecutionRepository executionRepository;
+    private ExecutionRepository executionRepository;
 
     @Before
     public void initTest() {

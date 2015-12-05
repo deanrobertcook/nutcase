@@ -29,19 +29,19 @@ public class TestStepExecutionServiceTest {
     public TestName name = new TestName();
 
     @Inject
-    TestStepExecutionService testStepExecutionService;
+    private TestStepExecutionService testStepExecutionService;
 
     @Inject
-    ExecutionRepository testStepExecutionRepository;
+    private ExecutionRepository testStepExecutionRepository;
 
     @Inject
-    ProjectRepository projectRepository;
+    private ProjectRepository projectRepository;
 
     @Inject
-    TestCaseRepository testCaseRepository;
+    private TestCaseRepository testCaseRepository;
 
     @Inject
-    TestStepRepository testStepRepository;
+    private TestStepRepository testStepRepository;
 
     @Before
     public void initTest() {
